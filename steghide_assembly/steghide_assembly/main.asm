@@ -1,7 +1,7 @@
 INCLUDE Irvine32.inc
 .data
 consoleHandle    DWORD ?
-filename BYTE "D:\ASM\HW1\Debug\test.bmp",0
+filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp",0
 fileHandle DWORD ? ; handle to output file
 bytesWritten DWORD ? ; number of bytes written
 errMsg BYTE "Cannot create file",0dh,0ah,0
