@@ -18,5 +18,19 @@
     <MASM Include="main.asm">
       <Filter>來源檔案</Filter>
     </MASM>
+    <MASM Include="file2byte.asm">
+      <Filter>來源檔案</Filter>
+    </MASM>
+    <MASM Include="encrypt.asm">
+      <Filter>來源檔案</Filter>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="file2byte.inc">
+      <Filter>來源檔案</Filter>
+    </None>
+    <None Include="encrypt.inc">
+      <Filter>來源檔案</Filter>
+    </None>
   </ItemGroup>
 </Project>

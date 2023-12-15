@@ -147,7 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <MASM Include="encrypt.asm" />
+    <MASM Include="file2byte.asm" />
     <MASM Include="main.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="encrypt.inc" />
+    <None Include="file2byte.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

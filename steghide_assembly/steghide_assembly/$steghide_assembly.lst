@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30153.0	    12/04/23 19:59:27
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:40:47
 main.asm						     Page 1 - 1
 
 
@@ -20,9 +20,12 @@ main.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
+				INCLUDE file2byte.inc ; Include the file containing the prototype
+			      C File2Byte PROTO, path:DWORD
+			      C 
+
  00000000			.data
- 00000000 00000000		consoleHandle    DWORD ?
- 00000004 43 3A 5C 73 74	filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp",0
+ 00000000 43 3A 5C 73 74	filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 	   65 67 68 69 64
 	   65 5F 61 73 73
 	   65 6D 62 6C 79
@@ -33,47 +36,19 @@ main.asm						     Page 1 - 1
 	   69 6C 65 73 5C
 	   74 65 73 74 2E
 	   62 6D 70 00
- 0000003A 00000000		fileHandle DWORD ? ; handle to output file
- 0000003E 00000000		bytesWritten DWORD ? ; number of bytes written
- 00000042 43 61 6E 6E 6F	errMsg BYTE "Cannot create file",0dh,0ah,0
+ 00000036 43 61 6E 6E 6F	errMsg BYTE "Cannot create file", 0
 	   74 20 63 72 65
 	   61 74 65 20 66
-	   69 6C 65 0D 0A
-	   00
- 00000057 00			Buffer BYTE ?;
-				;pBuffer PTR BYTE;
- 00000058 00000190		nBufsize DWORD 400;
- 0000005C 00			BytesRead BYTE ?;
- = start@0			main EQU start@0
+	   69 6C 65 00
+
  00000000			.code
  00000000			main PROC
-					INVOKE CreateFile,
-						ADDR filename,				; ptr to filename
-						GENERIC_READ,				; access mode
-						DO_NOT_SHARE,				; share mode
-						NULL,						; ptr to security attributes
-						OPEN_EXISTING,				; file creation options
-						FILE_ATTRIBUTE_NORMAL,		; file attributes
-						0							; handle to template file
- 0000001C  A3 0000003A R		mov fileHandle, eax
-					.IF eax == INVALID_HANDLE_VALUE
- 00000026  BA 00000042 R			mov edx,OFFSET errMsg ; Display error message
- 0000002B  E8 00000000 E			call WriteString
- 00000030  EB 1D				jmp END_FUNC
-					.ENDIF
-					INVOKE ReadFile,
-						fileHandle,				; handle to file
-						offset Buffer,			; ptr to buffer
-						nBufsize,				; num bytes to read
-						offset BytesRead,		; bytes actually read
-						NULL					; NULL (0) for syn mode
-					;INVOKE 
- 0000004F			END_FUNC:
-					exit
- 00000056			main ENDP
+				    INVOKE File2Byte, addr filename
+ 0000000A  C3			    ret
+ 0000000B			main ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30153.0	    12/04/23 19:59:27
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:40:47
 main.asm						     Symbols 2 - 1
 
 
@@ -167,8 +142,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000005D Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000056 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000049 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000B Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -185,6 +160,7 @@ Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+File2Byte  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -275,10 +251,9 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000B Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-start@0  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000056 Public STDCALL
-  END_FUNC . . . . . . . . . . .	L Near	 0000004F _TEXT	
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -296,8 +271,6 @@ Symbols:
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
 ALT_MASK . . . . . . . . . . . .	Number	 00000003h   
-Buffer . . . . . . . . . . . . .	Byte	 00000057 _DATA	
-BytesRead  . . . . . . . . . . .	Byte	 0000005C _DATA	
 CAPSLOCK_ON  . . . . . . . . . .	Number	 00000080h   
 CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
 CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
@@ -500,13 +473,10 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
-bytesWritten . . . . . . . . . .	DWord	 0000003E _DATA	
-consoleHandle  . . . . . . . . .	DWord	 00000000 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-errMsg . . . . . . . . . . . . .	Byte	 00000042 _DATA	
+errMsg . . . . . . . . . . . . .	Byte	 00000036 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
-fileHandle . . . . . . . . . . .	DWord	 0000003A _DATA	
-filename . . . . . . . . . . . .	Byte	 00000004 _DATA	
+filename . . . . . . . . . . . .	Byte	 00000000 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
@@ -516,8 +486,6 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-main . . . . . . . . . . . . . .	Text   	 start@0
-nBufsize . . . . . . . . . . . .	DWord	 00000058 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
