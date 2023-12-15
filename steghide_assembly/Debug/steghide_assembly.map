@@ -1,6 +1,6 @@
  steghide_assembly
 
- Timestamp is 657bceeb (Fri Dec 15 11:58:35 2023)
+ Timestamp is 657bf0dc (Fri Dec 15 14:23:24 2023)
 
  Preferred load address is 00400000
 
@@ -103,8 +103,8 @@
  0001:000026d1       _HideTheFile@20            004036d1 f   encrypt.obj
  0001:0000272a       _extractByte@4             0040372a f   encrypt.obj
  0001:00002762       _unHideTheFile@16          00403762 f   encrypt.obj
+ 0001:00002820       _main@0                    00403820 f   main.obj
  0001:00002870       _File2Byte@4               00403870 f   file2byte.obj
- 0001:000028f0       _main@0                    004038f0 f   main.obj
  0001:000028fd       _CloseHandle@4             004038fd f   kernel32:KERNEL32.dll
  0001:00002903       _CreateFileA@28            00403903 f   kernel32:KERNEL32.dll
  0001:00002909       _ReadFile@20               00403909 f   kernel32:KERNEL32.dll
@@ -199,8 +199,8 @@
  0001:000011d5       _AsciiDigit@0              004021d5 f   Irvine32:Irvine32.obj
  0001:000011de       _HexByte@0                 004021de f   Irvine32:Irvine32.obj
  0001:000026a0       $$000000                   004036a0     encrypt.obj
+ 0001:00002820       $$000000                   00403820     main.obj
  0001:00002870       $$000000                   00403870     file2byte.obj
- 0001:000028f0       $$000000                   004038f0     main.obj
  0003:00000000       img                        00406000     encrypt.obj
  0003:00000100       encrpyt                    00406100     encrypt.obj
  0003:0000010b       decrpyt                    0040610b     encrypt.obj
@@ -209,8 +209,6 @@
  0003:00000154       Buffer                     00406154     file2byte.obj
  0003:000002e4       BytesRead                  004062e4     file2byte.obj
  0003:000002e8       errMsg                     004062e8     file2byte.obj
- 0003:00000350       filename                   00406350     main.obj
- 0003:00000386       errMsg                     00406386     main.obj
  0003:000003b0       InitFlag                   004063b0     Irvine32:Irvine32.obj
  0003:000003b1       xtable                     004063b1     Irvine32:Irvine32.obj
  0003:000003c1       blanks                     004063c1     Irvine32:Irvine32.obj
@@ -282,6 +280,9 @@
  0003:00000c1b       WriteWindowsMsg_2          00406c1b     Irvine32:Irvine32.obj
  0003:00000c1e       pErrorMsg                  00406c1e     Irvine32:Irvine32.obj
  0003:00000c22       messageId                  00406c22     Irvine32:Irvine32.obj
+ 0003:00000c30       filename                   00406c30     main.obj
+ 0003:00000c66       errMsg                     00406c66     main.obj
+ 0003:00000c79       file_path                  00406c79     main.obj
  0003:00000ee0       consoleInHandle            00406ee0     Irvine32:Irvine32.obj
  0003:00000ee4       consoleOutHandle           00406ee4     Irvine32:Irvine32.obj
  0003:00000ee8       bytesWritten               00406ee8     Irvine32:Irvine32.obj

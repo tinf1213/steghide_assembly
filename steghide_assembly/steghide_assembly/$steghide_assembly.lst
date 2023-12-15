@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:58:35
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 14:24:19
 main.asm						     Page 1 - 1
 
 
@@ -40,17 +40,24 @@ main.asm						     Page 1 - 1
 	   74 20 63 72 65
 	   61 74 65 20 66
 	   69 6C 65 00
+ 00000049  00000100 [		file_path BYTE 256 dup (?)
+	    00
+	   ]
 
  00000000			.code
  00000000			main PROC
-				    ;mov edx, OFFSET file_path
-				    ;call ReadString
-				    INVOKE File2Byte, addr filename
- 0000000A  C3			    ret
- 0000000B			main ENDP
+ 00000000  BA 00000049 R	    mov edx, OFFSET file_path
+ 00000005  B9 000000FF		    mov ecx, LENGTHOF file_path-1
+ 0000000A  E8 00000000 E	    call ReadString
+				    ;mov ecx, LENGTHOF file_path
+				    ;call WriteString
+				    INVOKE File2Byte, ADDR file_path
+				    
+ 00000019  C3			    ret
+ 0000001A			main ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:58:35
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 14:24:19
 main.asm						     Symbols 2 - 1
 
 
@@ -144,8 +151,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000049 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000B Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000149 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000001A Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -253,7 +260,7 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000B Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001A Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -478,6 +485,7 @@ brown  . . . . . . . . . . . . .	Number	 00000006h
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 errMsg . . . . . . . . . . . . .	Byte	 00000036 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
+file_path  . . . . . . . . . . .	Byte	 00000049 _DATA	
 filename . . . . . . . . . . . .	Byte	 00000000 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
