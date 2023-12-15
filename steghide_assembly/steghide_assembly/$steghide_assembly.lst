@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 14:24:19
+Microsoft (R) Macro Assembler Version 14.24.28316.0	    12/16/23 01:21:10
 main.asm						     Page 1 - 1
 
 
@@ -23,7 +23,12 @@ main.asm						     Page 1 - 1
 				INCLUDE file2byte.inc ; Include the file containing the prototype
 			      C File2Byte PROTO, path:DWORD
 			      C 
-
+				INCLUDE encrypt.inc
+			      C ecnryptOneByte proto, showBMP: dword, hideByte: byte
+			      C HideTheFile proto, showBMP: dword, HideFile:dword,  BMPLen:dword, HideLen:dword, fileType: byte
+			      C extractByte proto, showBMP: dword
+			      C unHideTheFile proto, showBMP: dword, HideFile:dword,  BMPLen:dword, HideLen: dword
+			      C 
  00000000			.data
  00000000 43 3A 5C 73 74	filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 	   65 67 68 69 64
@@ -40,9 +45,27 @@ main.asm						     Page 1 - 1
 	   74 20 63 72 65
 	   61 74 65 20 66
 	   69 6C 65 00
- 00000049  00000100 [		file_path BYTE 256 dup (?)
+ 00000049  00000100 [		file_path BYTE 256 dup (?) 
 	    00
 	   ]
+				; 現在讀進來的是 File_path
+
+ 00000149 00000000		showBmpPtr dword ?
+ 0000014D 00000000		showBmpPtrTemp dword ?
+ 00000151 00000000		showBmpLen dword ?
+ 00000155 00000000		hideFilePtr dword ?
+ 00000159 00000000		hideFileLen dword ?
+ 0000015D 09			fileType byte 9
+
+ 0000015E  000003E8 [		unHideFile byte 1000 DUP(?);
+	    00
+	   ]
+ 00000546 00000000		unhideFileLen dword ?
+ 0000054A 00			unHideFileType byte ?
+
+ 0000054B 00000082		startFrom dword 82h
+
+
 
  00000000			.code
  00000000			main PROC
@@ -52,12 +75,45 @@ main.asm						     Page 1 - 1
 				    ;mov ecx, LENGTHOF file_path
 				    ;call WriteString
 				    INVOKE File2Byte, ADDR file_path
+ 00000019  A3 00000149 R	    mov showBmpPtr, eax
+ 0000001E  89 1D 00000151 R	    mov showBmpLen, ebx
+
+ 00000024  BA 00000049 R	    mov edx, OFFSET file_path
+ 00000029  B9 000000FF		    mov ecx, LENGTHOF file_path-1
+ 0000002E  E8 00000000 E	    call ReadString
+				    ;mov ecx, LENGTHOF file_path
+				    ;call WriteString
+				    INVOKE File2Byte, ADDR file_path
+ 0000003D  A3 00000155 R	    mov hideFilePtr, eax
+ 00000042  89 1D 00000159 R	    mov hideFileLen, ebx
 				    
- 00000019  C3			    ret
- 0000001A			main ENDP
+
+				    ; 這行以下是加密
+ 00000048  A1 00000149 R	    mov eax, showBmpPtr
+ 0000004D  03 05 0000054B R	    add eax, startFrom
+ 00000053  A3 0000014D R	    mov showBmpPtrTemp, eax
+
+				    invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
+				    ; 到這行是加密
+				    
+				    ; 這行以下是解密
+ 0000007B  A1 00000149 R	    mov eax, showBmpPtr
+ 00000080  03 05 0000054B R	    add eax, startFrom
+ 00000086  A3 0000014D R	    mov showBmpPtrTemp, eax
+
+				    invoke unHideTheFile , showBmpPtrTemp, OFFSET  unHideFile, showBmpLen, 0
+
+ 000000A3  A3 00000546 R	    mov unhideFileLen, eax
+ 000000A8  88 1D 0000054A R	    mov unHideFileType, bl
+
+				    ; 到這行是解密
+
+
+ 000000AE  C3			    ret
+ 000000AF			main ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 14:24:19
+Microsoft (R) Macro Assembler Version 14.24.28316.0	    12/16/23 01:21:10
 main.asm						     Symbols 2 - 1
 
 
@@ -151,8 +207,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000149 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000001A Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000054F Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000AF Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -199,6 +255,7 @@ HeapCreate . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapDestroy  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+HideTheFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -260,9 +317,12 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001A Public STDCALL
+ecnryptOneByte . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+extractByte  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000AF Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
+unHideTheFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -485,10 +545,13 @@ brown  . . . . . . . . . . . . .	Number	 00000006h
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 errMsg . . . . . . . . . . . . .	Byte	 00000036 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
+fileType . . . . . . . . . . . .	Byte	 0000015D _DATA	
 file_path  . . . . . . . . . . .	Byte	 00000049 _DATA	
 filename . . . . . . . . . . . .	Byte	 00000000 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
+hideFileLen  . . . . . . . . . .	DWord	 00000159 _DATA	
+hideFilePtr  . . . . . . . . . .	DWord	 00000155 _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -497,6 +560,13 @@ lightMagenta . . . . . . . . . .	Number	 0000000Dh
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+showBmpLen . . . . . . . . . . .	DWord	 00000151 _DATA	
+showBmpPtrTemp . . . . . . . . .	DWord	 0000014D _DATA	
+showBmpPtr . . . . . . . . . . .	DWord	 00000149 _DATA	
+startFrom  . . . . . . . . . . .	DWord	 0000054B _DATA	
+unHideFileType . . . . . . . . .	Byte	 0000054A _DATA	
+unHideFile . . . . . . . . . . .	Byte	 0000015E _DATA	
+unhideFileLen  . . . . . . . . .	DWord	 00000546 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   

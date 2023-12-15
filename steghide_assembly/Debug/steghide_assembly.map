@@ -1,17 +1,17 @@
  steghide_assembly
 
- Timestamp is 657bf0dc (Fri Dec 15 14:23:24 2023)
+ Timestamp is 657c8b07 (Sat Dec 16 01:21:11 2023)
 
  Preferred load address is 00400000
 
  Start         Length     Name                   Class
  0001:00000000 000026a0H .text                   CODE
- 0001:000026a0 00001322H .text$mn                CODE
+ 0001:000026a0 00001412H .text$mn                CODE
  0002:00000000 00000144H .rdata                  DATA
  0002:00000143 00000000H .edata                  DATA
  0002:00000144 00000186H .rdata$zzzdbg           DATA
- 0003:00000000 00000ee0H .data                   DATA
- 0003:00000ee0 000002f2H .bss                    DATA
+ 0003:00000000 00126280H .data                   DATA
+ 0003:00126280 000002f2H .bss                    DATA
  0004:00000000 000000d4H .idata$5                DATA
  0004:000000d4 00000028H .idata$2                DATA
  0004:000000fc 00000014H .idata$3                DATA
@@ -22,33 +22,22 @@
 
   Address         Publics by Value              Rva+Base       Lib:Object
 
- 0000:00000000       ___hybrid_auxiliary_iat_copy 00000000     <absolute>
- 0000:00000000       ___guard_fids_table        00000000     <absolute>
- 0000:00000000       ___enclave_config          00000000     <absolute>
- 0000:00000000       ___arm64x_redirection_metadata_count 00000000     <absolute>
- 0000:00000000       ___guard_check_icall_a64n_fptr 00000000     <absolute>
- 0000:00000000       ___guard_longjmp_count     00000000     <absolute>
- 0000:00000000       ___safe_se_handler_count   00000000     <absolute>
- 0000:00000000       ___guard_iat_table         00000000     <absolute>
- 0000:00000000       ___x64_code_ranges_to_entry_points_count 00000000     <absolute>
+ 0000:00000000       ___dynamic_value_reloc_table 00000000     <absolute>
+ 0000:00000000       ___hybrid_code_map         00000000     <absolute>
+ 0000:00000000       ___hybrid_auxiliary_iat    00000000     <absolute>
+ 0000:00000000       ___volatile_metadata       00000000     <absolute>
  0000:00000000       ___guard_iat_count         00000000     <absolute>
- 0000:00000000       ___guard_eh_cont_table     00000000     <absolute>
  0000:00000000       ___guard_fids_count        00000000     <absolute>
- 0000:00000000       ___AbsoluteZero            00000000     <absolute>
+ 0000:00000000       ___guard_longjmp_table     00000000     <absolute>
+ 0000:00000000       ___guard_longjmp_count     00000000     <absolute>
+ 0000:00000000       ___guard_iat_table         00000000     <absolute>
  0000:00000000       ___guard_flags             00000000     <absolute>
  0000:00000000       ___safe_se_handler_table   00000000     <absolute>
- 0000:00000000       ___arm64x_native_entrypoint 00000000     <absolute>
- 0000:00000000       ___guard_longjmp_table     00000000     <absolute>
- 0000:00000000       ___dynamic_value_reloc_table 00000000     <absolute>
- 0000:00000000       ___volatile_metadata       00000000     <absolute>
- 0000:00000000       ___hybrid_auxiliary_iat    00000000     <absolute>
- 0000:00000000       ___arm64x_extra_rfe_table  00000000     <absolute>
- 0000:00000000       ___arm64x_redirection_metadata 00000000     <absolute>
- 0000:00000000       ___guard_eh_cont_count     00000000     <absolute>
+ 0000:00000000       ___safe_se_handler_count   00000000     <absolute>
+ 0000:00000000       ___enclave_config          00000000     <absolute>
+ 0000:00000000       ___AbsoluteZero            00000000     <absolute>
+ 0000:00000000       ___guard_fids_table        00000000     <absolute>
  0000:00000000       ___hybrid_code_map_count   00000000     <absolute>
- 0000:00000000       ___x64_code_ranges_to_entry_points 00000000     <absolute>
- 0000:00000000       ___hybrid_code_map         00000000     <absolute>
- 0000:00000000       ___arm64x_extra_rfe_table_size 00000000     <absolute>
  0001:00000240       _CloseFile@0               00401240 f   Irvine32:Irvine32.obj
  0001:00000247       _Clrscr@0                  00401247 f   Irvine32:Irvine32.obj
  0001:0000030c       _CreateOutputFile@0        0040130c f   Irvine32:Irvine32.obj
@@ -103,194 +92,204 @@
  0001:000026d1       _HideTheFile@20            004036d1 f   encrypt.obj
  0001:0000272a       _extractByte@4             0040372a f   encrypt.obj
  0001:00002762       _unHideTheFile@16          00403762 f   encrypt.obj
- 0001:00002820       _main@0                    00403820 f   main.obj
- 0001:00002870       _File2Byte@4               00403870 f   file2byte.obj
- 0001:000028fd       _CloseHandle@4             004038fd f   kernel32:KERNEL32.dll
- 0001:00002903       _CreateFileA@28            00403903 f   kernel32:KERNEL32.dll
- 0001:00002909       _ReadFile@20               00403909 f   kernel32:KERNEL32.dll
- 0001:0000290f       _FormatMessageA@28         0040390f f   kernel32:KERNEL32.dll
- 0001:00002915       _FlushConsoleInputBuffer@4 00403915 f   kernel32:KERNEL32.dll
- 0001:0000291b       _GetCommandLineA@0         0040391b f   kernel32:KERNEL32.dll
- 0001:00002921       _GetConsoleMode@8          00403921 f   kernel32:KERNEL32.dll
- 0001:00002927       _GetConsoleScreenBufferInfo@8 00403927 f   kernel32:KERNEL32.dll
- 0001:0000292d       _GetLastError@0            0040392d f   kernel32:KERNEL32.dll
- 0001:00002933       _GetLocalTime@4            00403933 f   kernel32:KERNEL32.dll
- 0001:00002939       _GetStdHandle@4            00403939 f   kernel32:KERNEL32.dll
- 0001:0000293f       _GetSystemTime@4           0040393f f   kernel32:KERNEL32.dll
- 0001:00002945       _LocalFree@4               00403945 f   kernel32:KERNEL32.dll
- 0001:0000294b       _PeekConsoleInputA@16      0040394b f   kernel32:KERNEL32.dll
- 0001:00002951       _ReadConsoleA@20           00403951 f   kernel32:KERNEL32.dll
- 0001:00002957       _ReadConsoleInputA@16      00403957 f   kernel32:KERNEL32.dll
- 0001:0000295d       _SetConsoleCursorPosition@8 0040395d f   kernel32:KERNEL32.dll
- 0001:00002963       _SetConsoleMode@8          00403963 f   kernel32:KERNEL32.dll
- 0001:00002969       _SetConsoleTextAttribute@8 00403969 f   kernel32:KERNEL32.dll
- 0001:0000296f       _Sleep@4                   0040396f f   kernel32:KERNEL32.dll
- 0001:00002975       _SystemTimeToFileTime@8    00403975 f   kernel32:KERNEL32.dll
- 0001:0000297b       _WriteConsoleA@20          0040397b f   kernel32:KERNEL32.dll
- 0001:00002981       _WriteConsoleOutputCharacterA@20 00403981 f   kernel32:KERNEL32.dll
- 0001:00002987       _WriteConsoleOutputAttribute@20 00403987 f   kernel32:KERNEL32.dll
- 0001:0000298d       _WriteFile@20              0040398d f   kernel32:KERNEL32.dll
- 0001:00002993       _MessageBoxA@16            00403993 f   user32:USER32.dll
- 0004:00000000       __imp__CloseHandle@4       00408000     kernel32:KERNEL32.dll
- 0004:00000004       __imp__CreateFileA@28      00408004     kernel32:KERNEL32.dll
- 0004:00000008       __imp__ReadFile@20         00408008     kernel32:KERNEL32.dll
- 0004:0000000c       __imp__FormatMessageA@28   0040800c     kernel32:KERNEL32.dll
- 0004:00000010       __imp__FlushConsoleInputBuffer@4 00408010     kernel32:KERNEL32.dll
- 0004:00000014       __imp__GetCommandLineA@0   00408014     kernel32:KERNEL32.dll
- 0004:00000018       __imp__GetConsoleMode@8    00408018     kernel32:KERNEL32.dll
- 0004:0000001c       __imp__GetConsoleScreenBufferInfo@8 0040801c     kernel32:KERNEL32.dll
- 0004:00000020       __imp__GetLastError@0      00408020     kernel32:KERNEL32.dll
- 0004:00000024       __imp__GetLocalTime@4      00408024     kernel32:KERNEL32.dll
- 0004:00000028       __imp__GetStdHandle@4      00408028     kernel32:KERNEL32.dll
- 0004:0000002c       __imp__GetSystemTime@4     0040802c     kernel32:KERNEL32.dll
- 0004:00000030       __imp__LocalFree@4         00408030     kernel32:KERNEL32.dll
- 0004:00000034       __imp__PeekConsoleInputA@16 00408034     kernel32:KERNEL32.dll
- 0004:00000038       __imp__ReadConsoleA@20     00408038     kernel32:KERNEL32.dll
- 0004:0000003c       __imp__ReadConsoleInputA@16 0040803c     kernel32:KERNEL32.dll
- 0004:00000040       __imp__SetConsoleCursorPosition@8 00408040     kernel32:KERNEL32.dll
- 0004:00000044       __imp__SetConsoleMode@8    00408044     kernel32:KERNEL32.dll
- 0004:00000048       __imp__SetConsoleTextAttribute@8 00408048     kernel32:KERNEL32.dll
- 0004:0000004c       __imp__Sleep@4             0040804c     kernel32:KERNEL32.dll
- 0004:00000050       __imp__SystemTimeToFileTime@8 00408050     kernel32:KERNEL32.dll
- 0004:00000054       __imp__WriteConsoleA@20    00408054     kernel32:KERNEL32.dll
- 0004:00000058       __imp__WriteConsoleOutputCharacterA@20 00408058     kernel32:KERNEL32.dll
- 0004:0000005c       __imp__WriteConsoleOutputAttribute@20 0040805c     kernel32:KERNEL32.dll
- 0004:00000060       __imp__WriteFile@20        00408060     kernel32:KERNEL32.dll
- 0004:00000064       \177KERNEL32_NULL_THUNK_DATA 00408064     kernel32:KERNEL32.dll
- 0004:000000a4       __imp__MessageBoxA@16      004080a4     user32:USER32.dll
- 0004:000000a8       \177USER32_NULL_THUNK_DATA 004080a8     user32:USER32.dll
- 0004:000000d4       __IMPORT_DESCRIPTOR_KERNEL32 004080d4     kernel32:KERNEL32.dll
- 0004:000000e8       __IMPORT_DESCRIPTOR_USER32 004080e8     user32:USER32.dll
- 0004:000000fc       __NULL_IMPORT_DESCRIPTOR   004080fc     kernel32:KERNEL32.dll
+ 0001:00002880       _File2Byte@4               00403880 f   file2byte.obj
+ 0001:00002910       _main@0                    00403910 f   main.obj
+ 0001:000029ea       _CloseHandle@4             004039ea f   kernel32:KERNEL32.dll
+ 0001:000029f0       _CreateFileA@28            004039f0 f   kernel32:KERNEL32.dll
+ 0001:000029f6       _ReadFile@20               004039f6 f   kernel32:KERNEL32.dll
+ 0001:000029fc       _FormatMessageA@28         004039fc f   kernel32:KERNEL32.dll
+ 0001:00002a02       _FlushConsoleInputBuffer@4 00403a02 f   kernel32:KERNEL32.dll
+ 0001:00002a08       _GetCommandLineA@0         00403a08 f   kernel32:KERNEL32.dll
+ 0001:00002a0e       _GetConsoleMode@8          00403a0e f   kernel32:KERNEL32.dll
+ 0001:00002a14       _GetConsoleScreenBufferInfo@8 00403a14 f   kernel32:KERNEL32.dll
+ 0001:00002a1a       _GetLastError@0            00403a1a f   kernel32:KERNEL32.dll
+ 0001:00002a20       _GetLocalTime@4            00403a20 f   kernel32:KERNEL32.dll
+ 0001:00002a26       _GetStdHandle@4            00403a26 f   kernel32:KERNEL32.dll
+ 0001:00002a2c       _GetSystemTime@4           00403a2c f   kernel32:KERNEL32.dll
+ 0001:00002a32       _LocalFree@4               00403a32 f   kernel32:KERNEL32.dll
+ 0001:00002a38       _PeekConsoleInputA@16      00403a38 f   kernel32:KERNEL32.dll
+ 0001:00002a3e       _ReadConsoleA@20           00403a3e f   kernel32:KERNEL32.dll
+ 0001:00002a44       _ReadConsoleInputA@16      00403a44 f   kernel32:KERNEL32.dll
+ 0001:00002a4a       _SetConsoleCursorPosition@8 00403a4a f   kernel32:KERNEL32.dll
+ 0001:00002a50       _SetConsoleMode@8          00403a50 f   kernel32:KERNEL32.dll
+ 0001:00002a56       _SetConsoleTextAttribute@8 00403a56 f   kernel32:KERNEL32.dll
+ 0001:00002a5c       _Sleep@4                   00403a5c f   kernel32:KERNEL32.dll
+ 0001:00002a62       _SystemTimeToFileTime@8    00403a62 f   kernel32:KERNEL32.dll
+ 0001:00002a68       _WriteConsoleA@20          00403a68 f   kernel32:KERNEL32.dll
+ 0001:00002a6e       _WriteConsoleOutputCharacterA@20 00403a6e f   kernel32:KERNEL32.dll
+ 0001:00002a74       _WriteConsoleOutputAttribute@20 00403a74 f   kernel32:KERNEL32.dll
+ 0001:00002a7a       _WriteFile@20              00403a7a f   kernel32:KERNEL32.dll
+ 0001:00002a80       _MessageBoxA@16            00403a80 f   user32:USER32.dll
+ 0004:00000000       __imp__CloseHandle@4       0052d000     kernel32:KERNEL32.dll
+ 0004:00000004       __imp__CreateFileA@28      0052d004     kernel32:KERNEL32.dll
+ 0004:00000008       __imp__ReadFile@20         0052d008     kernel32:KERNEL32.dll
+ 0004:0000000c       __imp__FormatMessageA@28   0052d00c     kernel32:KERNEL32.dll
+ 0004:00000010       __imp__FlushConsoleInputBuffer@4 0052d010     kernel32:KERNEL32.dll
+ 0004:00000014       __imp__GetCommandLineA@0   0052d014     kernel32:KERNEL32.dll
+ 0004:00000018       __imp__GetConsoleMode@8    0052d018     kernel32:KERNEL32.dll
+ 0004:0000001c       __imp__GetConsoleScreenBufferInfo@8 0052d01c     kernel32:KERNEL32.dll
+ 0004:00000020       __imp__GetLastError@0      0052d020     kernel32:KERNEL32.dll
+ 0004:00000024       __imp__GetLocalTime@4      0052d024     kernel32:KERNEL32.dll
+ 0004:00000028       __imp__GetStdHandle@4      0052d028     kernel32:KERNEL32.dll
+ 0004:0000002c       __imp__GetSystemTime@4     0052d02c     kernel32:KERNEL32.dll
+ 0004:00000030       __imp__LocalFree@4         0052d030     kernel32:KERNEL32.dll
+ 0004:00000034       __imp__PeekConsoleInputA@16 0052d034     kernel32:KERNEL32.dll
+ 0004:00000038       __imp__ReadConsoleA@20     0052d038     kernel32:KERNEL32.dll
+ 0004:0000003c       __imp__ReadConsoleInputA@16 0052d03c     kernel32:KERNEL32.dll
+ 0004:00000040       __imp__SetConsoleCursorPosition@8 0052d040     kernel32:KERNEL32.dll
+ 0004:00000044       __imp__SetConsoleMode@8    0052d044     kernel32:KERNEL32.dll
+ 0004:00000048       __imp__SetConsoleTextAttribute@8 0052d048     kernel32:KERNEL32.dll
+ 0004:0000004c       __imp__Sleep@4             0052d04c     kernel32:KERNEL32.dll
+ 0004:00000050       __imp__SystemTimeToFileTime@8 0052d050     kernel32:KERNEL32.dll
+ 0004:00000054       __imp__WriteConsoleA@20    0052d054     kernel32:KERNEL32.dll
+ 0004:00000058       __imp__WriteConsoleOutputCharacterA@20 0052d058     kernel32:KERNEL32.dll
+ 0004:0000005c       __imp__WriteConsoleOutputAttribute@20 0052d05c     kernel32:KERNEL32.dll
+ 0004:00000060       __imp__WriteFile@20        0052d060     kernel32:KERNEL32.dll
+ 0004:00000064       \177KERNEL32_NULL_THUNK_DATA 0052d064     kernel32:KERNEL32.dll
+ 0004:000000a4       __imp__MessageBoxA@16      0052d0a4     user32:USER32.dll
+ 0004:000000a8       \177USER32_NULL_THUNK_DATA 0052d0a8     user32:USER32.dll
+ 0004:000000d4       __IMPORT_DESCRIPTOR_KERNEL32 0052d0d4     kernel32:KERNEL32.dll
+ 0004:000000e8       __IMPORT_DESCRIPTOR_USER32 0052d0e8     user32:USER32.dll
+ 0004:000000fc       __NULL_IMPORT_DESCRIPTOR   0052d0fc     kernel32:KERNEL32.dll
 
- entry point at        0001:000000b9
+ entry point at        0001:0000000a
 
  Static symbols
 
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     kernel32:KERNEL32.dll
- 0000:ffff5000       .debug$S                   00400000     user32:USER32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     kernel32:KERNEL32.dll
+ 0000:ffed0000       .debug$S                   00400000     user32:USER32.dll
  0001:00000634       _scan_for_quote@0          00401634 f   Irvine32:Irvine32.obj
  0001:0000075b       _Initialize@0              0040175b f   Irvine32:Irvine32.obj
  0001:00000b5f       _ReadKeyTranslate@0        00401b5f f   Irvine32:Irvine32.obj
  0001:000011d5       _AsciiDigit@0              004021d5 f   Irvine32:Irvine32.obj
  0001:000011de       _HexByte@0                 004021de f   Irvine32:Irvine32.obj
  0001:000026a0       $$000000                   004036a0     encrypt.obj
- 0001:00002820       $$000000                   00403820     main.obj
- 0001:00002870       $$000000                   00403870     file2byte.obj
+ 0001:00002880       $$000000                   00403880     file2byte.obj
+ 0001:00002910       $$000000                   00403910     main.obj
  0003:00000000       img                        00406000     encrypt.obj
  0003:00000100       encrpyt                    00406100     encrypt.obj
  0003:0000010b       decrpyt                    0040610b     encrypt.obj
  0003:00000115       decrpytFileType            00406115     encrypt.obj
  0003:00000150       fileHandle                 00406150     file2byte.obj
  0003:00000154       Buffer                     00406154     file2byte.obj
- 0003:000002e4       BytesRead                  004062e4     file2byte.obj
- 0003:000002e8       errMsg                     004062e8     file2byte.obj
- 0003:000003b0       InitFlag                   004063b0     Irvine32:Irvine32.obj
- 0003:000003b1       xtable                     004063b1     Irvine32:Irvine32.obj
- 0003:000003c1       blanks                     004063c1     Irvine32:Irvine32.obj
- 0003:000005c1       attribs                    004065c1     Irvine32:Irvine32.obj
- 0003:000009c1       lineLength                 004069c1     Irvine32:Irvine32.obj
- 0003:000009c5       cursorLoc                  004069c5     Irvine32:Irvine32.obj
- 0003:000009c9       count                      004069c9     Irvine32:Irvine32.obj
- 0003:000009cd       ??0002                     004069cd     Irvine32:Irvine32.obj
- 0003:000009d2       dumpPrompt                 004069d2     Irvine32:Irvine32.obj
- 0003:000009e4       dashLine                   004069e4     Irvine32:Irvine32.obj
- 0003:00000a06       ??0003                     00406a06     Irvine32:Irvine32.obj
- 0003:00000a09       ??0004                     00406a09     Irvine32:Irvine32.obj
- 0003:00000a0b       ??0005                     00406a0b     Irvine32:Irvine32.obj
- 0003:00000a0d       saveIP                     00406a0d     Irvine32:Irvine32.obj
- 0003:00000a11       saveESP                    00406a11     Irvine32:Irvine32.obj
- 0003:00000a15       ??0006                     00406a15     Irvine32:Irvine32.obj
- 0003:00000a1c       ??0007                     00406a1c     Irvine32:Irvine32.obj
- 0003:00000a23       ??0008                     00406a23     Irvine32:Irvine32.obj
- 0003:00000a2a       ??0009                     00406a2a     Irvine32:Irvine32.obj
- 0003:00000a31       ??000A                     00406a31     Irvine32:Irvine32.obj
- 0003:00000a38       ??000B                     00406a38     Irvine32:Irvine32.obj
- 0003:00000a3f       ??000C                     00406a3f     Irvine32:Irvine32.obj
- 0003:00000a46       ??000D                     00406a46     Irvine32:Irvine32.obj
- 0003:00000a4d       ??000E                     00406a4d     Irvine32:Irvine32.obj
- 0003:00000a54       ??000F                     00406a54     Irvine32:Irvine32.obj
- 0003:00000a5b       ??0010                     00406a5b     Irvine32:Irvine32.obj
- 0003:00000a60       ??0011                     00406a60     Irvine32:Irvine32.obj
- 0003:00000a62       ??0013                     00406a62     Irvine32:Irvine32.obj
- 0003:00000a67       ??0014                     00406a67     Irvine32:Irvine32.obj
- 0003:00000a69       ??0016                     00406a69     Irvine32:Irvine32.obj
- 0003:00000a6e       ??0017                     00406a6e     Irvine32:Irvine32.obj
- 0003:00000a70       ??0019                     00406a70     Irvine32:Irvine32.obj
- 0003:00000a75       ??001A                     00406a75     Irvine32:Irvine32.obj
- 0003:00000a77       ??001C                     00406a77     Irvine32:Irvine32.obj
- 0003:00000a7c       ??001D                     00406a7c     Irvine32:Irvine32.obj
- 0003:00000a7e       ??001F                     00406a7e     Irvine32:Irvine32.obj
- 0003:00000a83       ??0020                     00406a83     Irvine32:Irvine32.obj
- 0003:00000a85       _cursorPosition            00406a85     Irvine32:Irvine32.obj
- 0003:00000a89       @zx02abc_def_caption       00406a89     Irvine32:Irvine32.obj
- 0003:00000a8b       @zq02abc_def_caption       00406a8b     Irvine32:Irvine32.obj
- 0003:00000a8d       overflow_msgL              00406a8d     Irvine32:Irvine32.obj
- 0003:00000aa8       invalid_msgL               00406aa8     Irvine32:Irvine32.obj
- 0003:00000abb       seed                       00406abb     Irvine32:Irvine32.obj
- 0003:00000abf       xbtable                    00406abf     Irvine32:Irvine32.obj
- 0003:00000ad6       numVal                     00406ad6     Irvine32:Irvine32.obj
- 0003:00000ada       charVal                    00406ada     Irvine32:Irvine32.obj
- 0003:00000adb       evBuffer                   00406adb     Irvine32:Irvine32.obj
- 0003:00000aef       evRepeat                   00406aef     Irvine32:Irvine32.obj
- 0003:00000af1       SpecialCases               00406af1     Irvine32:Irvine32.obj
- 0003:00000b32       _$$temp                    00406b32     Irvine32:Irvine32.obj
- 0003:00000b36       waitmsgstr                 00406b36     Irvine32:Irvine32.obj
- 0003:00000b53       bufferL                    00406b53     Irvine32:Irvine32.obj
- 0003:00000b60       bufferLHB                  00406b60     Irvine32:Irvine32.obj
- 0003:00000b69       buffer_B                   00406b69     Irvine32:Irvine32.obj
- 0003:00000b76       neg_flag                   00406b76     Irvine32:Irvine32.obj
- 0003:00000b77       LblStack                   00406b77     Irvine32:Irvine32.obj
- 0003:00000b84       LblFor                     00406b84     Irvine32:Irvine32.obj
- 0003:00000b89       LblEbp                     00406b89     Irvine32:Irvine32.obj
- 0003:00000b8f       LblParam                   00406b8f     Irvine32:Irvine32.obj
- 0003:00000b9c       LblEbpPtr                  00406b9c     Irvine32:Irvine32.obj
- 0003:00000bb2       LblSaved                   00406bb2     Irvine32:Irvine32.obj
- 0003:00000bc4       LblLocal                   00406bc4     Irvine32:Irvine32.obj
- 0003:00000bd6       LblReturn                  00406bd6     Irvine32:Irvine32.obj
- 0003:00000be8       LblEsp                     00406be8     Irvine32:Irvine32.obj
- 0003:00000bf4       BadStackFrameMsg           00406bf4     Irvine32:Irvine32.obj
- 0003:00000c0f       NoName                     00406c0f     Irvine32:Irvine32.obj
- 0003:00000c10       WriteToFile_1              00406c10     Irvine32:Irvine32.obj
- 0003:00000c14       WriteWindowsMsg_1          00406c14     Irvine32:Irvine32.obj
- 0003:00000c1b       WriteWindowsMsg_2          00406c1b     Irvine32:Irvine32.obj
- 0003:00000c1e       pErrorMsg                  00406c1e     Irvine32:Irvine32.obj
- 0003:00000c22       messageId                  00406c22     Irvine32:Irvine32.obj
- 0003:00000c30       filename                   00406c30     main.obj
- 0003:00000c66       errMsg                     00406c66     main.obj
- 0003:00000c79       file_path                  00406c79     main.obj
- 0003:00000ee0       consoleInHandle            00406ee0     Irvine32:Irvine32.obj
- 0003:00000ee4       consoleOutHandle           00406ee4     Irvine32:Irvine32.obj
- 0003:00000ee8       bytesWritten               00406ee8     Irvine32:Irvine32.obj
- 0003:00000eec       eflags                     00406eec     Irvine32:Irvine32.obj
- 0003:00000ef0       digitBuffer                00406ef0     Irvine32:Irvine32.obj
- 0003:00000f41       buffer                     00406f41     Irvine32:Irvine32.obj
- 0003:00001141       bytesRead                  00407141     Irvine32:Irvine32.obj
- 0003:00001145       sysTime                    00407145     Irvine32:Irvine32.obj
- 0004:000003c0       .idata$6                   004083c0     kernel32:KERNEL32.dll
- 0004:000003dc       .idata$6                   004083dc     user32:USER32.dll
- 0005:00000170       $R000000                   00409170     * linker generated manifest res *
+ 0003:000f4394       BytesRead                  004fa394     file2byte.obj
+ 0003:000f4398       errMsg                     004fa398     file2byte.obj
+ 0003:001250f0       filename                   0052b0f0     main.obj
+ 0003:00125126       errMsg                     0052b126     main.obj
+ 0003:00125139       file_path                  0052b139     main.obj
+ 0003:00125239       showBmpPtr                 0052b239     main.obj
+ 0003:0012523d       showBmpPtrTemp             0052b23d     main.obj
+ 0003:00125241       showBmpLen                 0052b241     main.obj
+ 0003:00125245       hideFilePtr                0052b245     main.obj
+ 0003:00125249       hideFileLen                0052b249     main.obj
+ 0003:0012524d       fileType                   0052b24d     main.obj
+ 0003:0012524e       unHideFile                 0052b24e     main.obj
+ 0003:00125636       unhideFileLen              0052b636     main.obj
+ 0003:0012563a       unHideFileType             0052b63a     main.obj
+ 0003:0012563b       startFrom                  0052b63b     main.obj
+ 0003:00125750       InitFlag                   0052b750     Irvine32:Irvine32.obj
+ 0003:00125751       xtable                     0052b751     Irvine32:Irvine32.obj
+ 0003:00125761       blanks                     0052b761     Irvine32:Irvine32.obj
+ 0003:00125961       attribs                    0052b961     Irvine32:Irvine32.obj
+ 0003:00125d61       lineLength                 0052bd61     Irvine32:Irvine32.obj
+ 0003:00125d65       cursorLoc                  0052bd65     Irvine32:Irvine32.obj
+ 0003:00125d69       count                      0052bd69     Irvine32:Irvine32.obj
+ 0003:00125d6d       ??0002                     0052bd6d     Irvine32:Irvine32.obj
+ 0003:00125d72       dumpPrompt                 0052bd72     Irvine32:Irvine32.obj
+ 0003:00125d84       dashLine                   0052bd84     Irvine32:Irvine32.obj
+ 0003:00125da6       ??0003                     0052bda6     Irvine32:Irvine32.obj
+ 0003:00125da9       ??0004                     0052bda9     Irvine32:Irvine32.obj
+ 0003:00125dab       ??0005                     0052bdab     Irvine32:Irvine32.obj
+ 0003:00125dad       saveIP                     0052bdad     Irvine32:Irvine32.obj
+ 0003:00125db1       saveESP                    0052bdb1     Irvine32:Irvine32.obj
+ 0003:00125db5       ??0006                     0052bdb5     Irvine32:Irvine32.obj
+ 0003:00125dbc       ??0007                     0052bdbc     Irvine32:Irvine32.obj
+ 0003:00125dc3       ??0008                     0052bdc3     Irvine32:Irvine32.obj
+ 0003:00125dca       ??0009                     0052bdca     Irvine32:Irvine32.obj
+ 0003:00125dd1       ??000A                     0052bdd1     Irvine32:Irvine32.obj
+ 0003:00125dd8       ??000B                     0052bdd8     Irvine32:Irvine32.obj
+ 0003:00125ddf       ??000C                     0052bddf     Irvine32:Irvine32.obj
+ 0003:00125de6       ??000D                     0052bde6     Irvine32:Irvine32.obj
+ 0003:00125ded       ??000E                     0052bded     Irvine32:Irvine32.obj
+ 0003:00125df4       ??000F                     0052bdf4     Irvine32:Irvine32.obj
+ 0003:00125dfb       ??0010                     0052bdfb     Irvine32:Irvine32.obj
+ 0003:00125e00       ??0011                     0052be00     Irvine32:Irvine32.obj
+ 0003:00125e02       ??0013                     0052be02     Irvine32:Irvine32.obj
+ 0003:00125e07       ??0014                     0052be07     Irvine32:Irvine32.obj
+ 0003:00125e09       ??0016                     0052be09     Irvine32:Irvine32.obj
+ 0003:00125e0e       ??0017                     0052be0e     Irvine32:Irvine32.obj
+ 0003:00125e10       ??0019                     0052be10     Irvine32:Irvine32.obj
+ 0003:00125e15       ??001A                     0052be15     Irvine32:Irvine32.obj
+ 0003:00125e17       ??001C                     0052be17     Irvine32:Irvine32.obj
+ 0003:00125e1c       ??001D                     0052be1c     Irvine32:Irvine32.obj
+ 0003:00125e1e       ??001F                     0052be1e     Irvine32:Irvine32.obj
+ 0003:00125e23       ??0020                     0052be23     Irvine32:Irvine32.obj
+ 0003:00125e25       _cursorPosition            0052be25     Irvine32:Irvine32.obj
+ 0003:00125e29       @zx02abc_def_caption       0052be29     Irvine32:Irvine32.obj
+ 0003:00125e2b       @zq02abc_def_caption       0052be2b     Irvine32:Irvine32.obj
+ 0003:00125e2d       overflow_msgL              0052be2d     Irvine32:Irvine32.obj
+ 0003:00125e48       invalid_msgL               0052be48     Irvine32:Irvine32.obj
+ 0003:00125e5b       seed                       0052be5b     Irvine32:Irvine32.obj
+ 0003:00125e5f       xbtable                    0052be5f     Irvine32:Irvine32.obj
+ 0003:00125e76       numVal                     0052be76     Irvine32:Irvine32.obj
+ 0003:00125e7a       charVal                    0052be7a     Irvine32:Irvine32.obj
+ 0003:00125e7b       evBuffer                   0052be7b     Irvine32:Irvine32.obj
+ 0003:00125e8f       evRepeat                   0052be8f     Irvine32:Irvine32.obj
+ 0003:00125e91       SpecialCases               0052be91     Irvine32:Irvine32.obj
+ 0003:00125ed2       _$$temp                    0052bed2     Irvine32:Irvine32.obj
+ 0003:00125ed6       waitmsgstr                 0052bed6     Irvine32:Irvine32.obj
+ 0003:00125ef3       bufferL                    0052bef3     Irvine32:Irvine32.obj
+ 0003:00125f00       bufferLHB                  0052bf00     Irvine32:Irvine32.obj
+ 0003:00125f09       buffer_B                   0052bf09     Irvine32:Irvine32.obj
+ 0003:00125f16       neg_flag                   0052bf16     Irvine32:Irvine32.obj
+ 0003:00125f17       LblStack                   0052bf17     Irvine32:Irvine32.obj
+ 0003:00125f24       LblFor                     0052bf24     Irvine32:Irvine32.obj
+ 0003:00125f29       LblEbp                     0052bf29     Irvine32:Irvine32.obj
+ 0003:00125f2f       LblParam                   0052bf2f     Irvine32:Irvine32.obj
+ 0003:00125f3c       LblEbpPtr                  0052bf3c     Irvine32:Irvine32.obj
+ 0003:00125f52       LblSaved                   0052bf52     Irvine32:Irvine32.obj
+ 0003:00125f64       LblLocal                   0052bf64     Irvine32:Irvine32.obj
+ 0003:00125f76       LblReturn                  0052bf76     Irvine32:Irvine32.obj
+ 0003:00125f88       LblEsp                     0052bf88     Irvine32:Irvine32.obj
+ 0003:00125f94       BadStackFrameMsg           0052bf94     Irvine32:Irvine32.obj
+ 0003:00125faf       NoName                     0052bfaf     Irvine32:Irvine32.obj
+ 0003:00125fb0       WriteToFile_1              0052bfb0     Irvine32:Irvine32.obj
+ 0003:00125fb4       WriteWindowsMsg_1          0052bfb4     Irvine32:Irvine32.obj
+ 0003:00125fbb       WriteWindowsMsg_2          0052bfbb     Irvine32:Irvine32.obj
+ 0003:00125fbe       pErrorMsg                  0052bfbe     Irvine32:Irvine32.obj
+ 0003:00125fc2       messageId                  0052bfc2     Irvine32:Irvine32.obj
+ 0003:00126280       consoleInHandle            0052c280     Irvine32:Irvine32.obj
+ 0003:00126284       consoleOutHandle           0052c284     Irvine32:Irvine32.obj
+ 0003:00126288       bytesWritten               0052c288     Irvine32:Irvine32.obj
+ 0003:0012628c       eflags                     0052c28c     Irvine32:Irvine32.obj
+ 0003:00126290       digitBuffer                0052c290     Irvine32:Irvine32.obj
+ 0003:001262e1       buffer                     0052c2e1     Irvine32:Irvine32.obj
+ 0003:001264e1       bytesRead                  0052c4e1     Irvine32:Irvine32.obj
+ 0003:001264e5       sysTime                    0052c4e5     Irvine32:Irvine32.obj
+ 0004:000003c0       .idata$6                   0052d3c0     kernel32:KERNEL32.dll
+ 0004:000003dc       .idata$6                   0052d3dc     user32:USER32.dll
+ 0005:00000170       $R000000                   0052e170     * linker generated manifest res *

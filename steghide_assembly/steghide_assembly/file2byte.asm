@@ -2,7 +2,7 @@ INCLUDE Irvine32.inc
 
 .data
 fileHandle HANDLE ?
-Buffer BYTE 400 DUP (?)     ; Buffer to read data
+Buffer BYTE 1000000 DUP (?)     ; Buffer to read data
 BytesRead DWORD ?
 errMsg BYTE "Cannot create file", 0
 
@@ -28,13 +28,15 @@ File2Byte PROC,
     INVOKE ReadFile,
         fileHandle,               ; handle to file
         ADDR Buffer,              ; ptr to buffer
-        400,                      ; num bytes to read
+        Lengthof Buffer,                      ; num bytes to read
         ADDR BytesRead,           ; bytes actually read
         NULL                      ; NULL (0) for synchronous mode
 
+    
 END_FUNC:
     INVOKE CloseHandle, fileHandle
-    mov eax, OFFSET Buffer
+    mov eax, Offset Buffer
+    mov ebx, BytesRead
     ret
 File2Byte ENDP
 END

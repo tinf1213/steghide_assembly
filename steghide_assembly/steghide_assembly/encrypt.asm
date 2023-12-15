@@ -211,6 +211,9 @@ unHideTheFile proc,
 		inc esi
 	loop checkDecrypt
 
+	mov eax, HideLen
+	mov bl, decrpytFileType
+
     ret
 unHideTheFile endp
 
