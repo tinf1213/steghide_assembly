@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:40:47
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:58:35
 main.asm						     Page 1 - 1
 
 
@@ -43,12 +43,14 @@ main.asm						     Page 1 - 1
 
  00000000			.code
  00000000			main PROC
+				    ;mov edx, OFFSET file_path
+				    ;call ReadString
 				    INVOKE File2Byte, addr filename
  0000000A  C3			    ret
  0000000B			main ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:40:47
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/15/23 11:58:35
 main.asm						     Symbols 2 - 1
 
 

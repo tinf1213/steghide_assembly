@@ -34,6 +34,7 @@ File2Byte PROC,
 
 END_FUNC:
     INVOKE CloseHandle, fileHandle
+    mov eax, OFFSET Buffer
     ret
 File2Byte ENDP
 END

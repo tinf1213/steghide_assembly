@@ -7,6 +7,8 @@ errMsg BYTE "Cannot create file", 0
 
 .code
 main PROC
+    ;mov edx, OFFSET file_path
+    ;call ReadString
     INVOKE File2Byte, addr filename
     ret
 main ENDP
