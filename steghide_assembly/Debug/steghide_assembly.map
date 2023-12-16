@@ -1,6 +1,6 @@
  steghide_assembly
 
- Timestamp is 657d8764 (Sat Dec 16 19:17:56 2023)
+ Timestamp is 657da555 (Sat Dec 16 21:25:41 2023)
 
  Preferred load address is 00400000
 
@@ -222,19 +222,21 @@
  0003:000002f4       Buffer                     004062f4     file2byte.obj
  0003:000f4534       BytesRead                  004fa534     file2byte.obj
  0003:000f4538       errMsg                     004fa538     file2byte.obj
- 0003:00125290       filename                   0052b290     main.obj
- 0003:001252c6       errMsg                     0052b2c6     main.obj
- 0003:001252d9       file_path                  0052b2d9     main.obj
- 0003:001253d9       showBmpPtr                 0052b3d9     main.obj
- 0003:001253dd       showBmpPtrTemp             0052b3dd     main.obj
- 0003:001253e1       showBmpLen                 0052b3e1     main.obj
- 0003:001253e5       hideFilePtr                0052b3e5     main.obj
- 0003:001253e9       hideFileLen                0052b3e9     main.obj
- 0003:001253ed       fileType                   0052b3ed     main.obj
- 0003:001253ee       unHideFile                 0052b3ee     main.obj
- 0003:001257d6       unhideFileLen              0052b7d6     main.obj
- 0003:001257da       unHideFileType             0052b7da     main.obj
- 0003:001257db       startFrom                  0052b7db     main.obj
+ 0003:000f4550       buffer_showBmp             004fa550     main.obj
+ 0003:000f6c60       buffer_hideFile            004fcc60     main.obj
+ 0003:000f9370       filename                   004ff370     main.obj
+ 0003:000f93a6       errMsg                     004ff3a6     main.obj
+ 0003:000f93b9       file_path                  004ff3b9     main.obj
+ 0003:000f94b9       showBmpPtr                 004ff4b9     main.obj
+ 0003:000f94bd       showBmpPtrTemp             004ff4bd     main.obj
+ 0003:000f94c1       showBmpLen                 004ff4c1     main.obj
+ 0003:000f94c5       hideFilePtr                004ff4c5     main.obj
+ 0003:000f94c9       hideFileLen                004ff4c9     main.obj
+ 0003:000f94cd       fileType                   004ff4cd     main.obj
+ 0003:000f94ce       unHideFile                 004ff4ce     main.obj
+ 0003:000f98b6       unhideFileLen              004ff8b6     main.obj
+ 0003:000f98ba       unHideFileType             004ff8ba     main.obj
+ 0003:000f98bb       startFrom                  004ff8bb     main.obj
  0003:001258f0       InitFlag                   0052b8f0     Irvine32:Irvine32.obj
  0003:001258f1       xtable                     0052b8f1     Irvine32:Irvine32.obj
  0003:00125901       blanks                     0052b901     Irvine32:Irvine32.obj

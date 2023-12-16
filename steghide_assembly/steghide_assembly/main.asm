@@ -3,6 +3,10 @@ INCLUDE file2byte.inc ; Include the file containing the prototype
 INCLUDE encrypt.inc
 INCLUDE byte2file.inc
 .data
+
+buffer_showBmp BYTE 10000 dup(?)
+buffer_hideFile BYTE 10000 dup(?)
+
 filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 errMsg BYTE "Cannot create file", 0
 file_path BYTE 256 dup (?) 
@@ -31,8 +35,10 @@ main PROC
     ;mov ecx, LENGTHOF file_path
     ;call WriteString
     INVOKE File2Byte, ADDR file_path
-    mov showBmpPtr, eax
-    mov showBmpLen, ebx
+    mov esi, eax
+    mov ecx, ebx
+    mov edi, OFFSET buffer_showBmp
+    rep movsb
 
     mov edx, OFFSET file_path
     mov ecx, LENGTHOF file_path-1
@@ -40,8 +46,10 @@ main PROC
     ;mov ecx, LENGTHOF file_path
     ;call WriteString
     INVOKE File2Byte, ADDR file_path
-    mov hideFilePtr, eax
-    mov hideFileLen, ebx
+    mov esi, eax
+    mov ecx, ebx
+    mov edi, OFFSET buffer_hideFile
+    rep movsb
     
 
     ; 這行以下是加密
