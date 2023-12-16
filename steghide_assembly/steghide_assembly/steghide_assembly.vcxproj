@@ -147,11 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <MASM Include="byte2file.asm" />
     <MASM Include="encrypt.asm" />
     <MASM Include="file2byte.asm" />
     <MASM Include="main.asm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="byte2file.inc" />
     <None Include="encrypt.inc" />
     <None Include="file2byte.inc" />
   </ItemGroup>

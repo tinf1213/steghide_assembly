@@ -24,12 +24,18 @@
     <MASM Include="encrypt.asm">
       <Filter>來源檔案</Filter>
     </MASM>
+    <MASM Include="byte2file.asm">
+      <Filter>來源檔案</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <None Include="file2byte.inc">
       <Filter>來源檔案</Filter>
     </None>
     <None Include="encrypt.inc">
+      <Filter>來源檔案</Filter>
+    </None>
+    <None Include="byte2file.inc">
       <Filter>來源檔案</Filter>
     </None>
   </ItemGroup>

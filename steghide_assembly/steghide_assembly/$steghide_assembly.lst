@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/16/23 13:17:13
-main.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.29.30153.0	    12/16/23 17:29:16
+byte2file.asm						     Page 1 - 1
 
 
-				INCLUDE Irvine32.inc
+				include Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
 			      C ;OPTION CASEMAP:NONE		; optional: make identifiers case-sensitive
@@ -20,101 +20,207 @@ main.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
-				INCLUDE file2byte.inc ; Include the file containing the prototype
-			      C File2Byte PROTO, path:DWORD
-			      C 
-				INCLUDE encrypt.inc
-			      C ecnryptOneByte proto, showBMP: dword, hideByte: byte
-			      C HideTheFile proto, showBMP: dword, HideFile:dword,  BMPLen:dword, HideLen:dword, fileType: byte
-			      C extractByte proto, showBMP: dword
-			      C unHideTheFile proto, showBMP: dword, HideFile:dword,  BMPLen:dword, HideLen: dword
-			      C 
- 00000000			.data
- 00000000 43 3A 5C 73 74	filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
+ 00000000			.data 
+ 00000000 43 3A 5C 73 74	filename01 BYTE "C:\steghide_assembly\output\Create0.txt",0
 	   65 67 68 69 64
 	   65 5F 61 73 73
 	   65 6D 62 6C 79
-	   5C 73 74 65 67
-	   68 69 64 65 5F
-	   61 73 73 65 6D
-	   62 6C 79 5C 66
-	   69 6C 65 73 5C
-	   74 65 73 74 2E
-	   62 6D 70 00
- 00000036 43 61 6E 6E 6F	errMsg BYTE "Cannot create file", 0
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 30
+	   2E 74 78 74 00
+ 00000028 43 3A 5C 73 74	filename02 BYTE "C:\steghide_assembly\output\Create0.bmp",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 30
+	   2E 62 6D 70 00
+ 00000050 43 3A 5C 73 74	filename03 BYTE "C:\steghide_assembly\output\Create0.jpg",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 30
+	   2E 6A 70 67 00
+ 00000078 43 3A 5C 73 74	filename04 BYTE "C:\steghide_assembly\output\Create0.exe",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 30
+	   2E 65 78 65 00
+ 000000A0 43 3A 5C 73 74	filename11 BYTE "C:\steghide_assembly\output\Create1.txt",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 31
+	   2E 74 78 74 00
+ 000000C8 43 3A 5C 73 74	filename12 BYTE "C:\steghide_assembly\output\Create1.bmp",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 31
+	   2E 62 6D 70 00
+ 000000F0 43 3A 5C 73 74	filename13 BYTE "C:\steghide_assembly\output\Create1.jpg",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 31
+	   2E 6A 70 67 00
+ 00000118 43 3A 5C 73 74	filename14 BYTE "C:\steghide_assembly\output\Create1.exe",0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 6F 75 74 70
+	   75 74 5C 43 72
+	   65 61 74 65 31
+	   2E 65 78 65 00
+ 00000140 43 61 6E 6E 6F	errMsg BYTE "Cannot create file",0dh,0ah,0
 	   74 20 63 72 65
 	   61 74 65 20 66
-	   69 6C 65 00
- 00000049  00000100 [		file_path BYTE 256 dup (?) 
-	    00
-	   ]
-				; 現在讀進來的是 File_path
+	   69 6C 65 0D 0A
+	   00
+ 00000155 00000000		fileHandle DWORD ?
+				;Buffer BYTE "123"
+				;bufsize DWORD 3;
+ 00000159 00			bytesWritten BYTE ?;
 
- 00000149 00000000		showBmpPtr dword ?
- 0000014D 00000000		showBmpPtrTemp dword ?
- 00000151 00000000		showBmpLen dword ?
- 00000155 00000000		hideFilePtr dword ?
- 00000159 00000000		hideFileLen dword ?
- 0000015D 09			fileType byte 9
+				;showBmpPtr dword 3
+				;showBmpPtrTemp dword 3
+				;showBmpLen dword 3
+				;ft byte 1
+ 00000000			.code 
+				;main PROC 
+					;invoke byte2file, showBmpPtr, showBmpLen, ft;
+				;invoke ExitProcess,0 
+				;main ENDP 
+ 00000000			byte2file proc,
+					buffer: DWORD, bufSize: DWORD, fileType: byte, output: DWORD
+					;output=0
+					.IF output==0
+					.IF fileType==1
+						INVOKE CreateFile,
+						ADDR filename01, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
- 0000015E  000003E8 [		unHideFile byte 1000 DUP(?);
-	    00
-	   ]
- 00000546 00000000		unhideFileLen dword ?
- 0000054A 00			unHideFileType byte ?
+					.IF fileType==2
+						INVOKE CreateFile,
+						ADDR filename02, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
- 0000054B 00000082		startFrom dword 82h
+					.IF fileType==3
+						INVOKE CreateFile,
+						ADDR filename03, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
+					.IF fileType==4
+						INVOKE CreateFile,
+						ADDR filename04, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
+					.ENDIF
 
+					;output=1
+					.IF output==1
+					.IF fileType==1
+						INVOKE CreateFile,
+						ADDR filename11, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
- 00000000			.code
- 00000000			main PROC
- 00000000  BA 00000049 R	    mov edx, OFFSET file_path
- 00000005  B9 000000FF		    mov ecx, LENGTHOF file_path-1
- 0000000A  E8 00000000 E	    call ReadString
-				    ;mov ecx, LENGTHOF file_path
-				    ;call WriteString
-				    INVOKE File2Byte, ADDR file_path
- 00000019  A3 00000149 R	    mov showBmpPtr, eax
- 0000001E  89 1D 00000151 R	    mov showBmpLen, ebx
+					.IF fileType==2
+						INVOKE CreateFile,
+						ADDR filename12, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
- 00000024  BA 00000049 R	    mov edx, OFFSET file_path
- 00000029  B9 000000FF		    mov ecx, LENGTHOF file_path-1
- 0000002E  E8 00000000 E	    call ReadString
-				    ;mov ecx, LENGTHOF file_path
-				    ;call WriteString
-				    INVOKE File2Byte, ADDR file_path
- 0000003D  A3 00000155 R	    mov hideFilePtr, eax
- 00000042  89 1D 00000159 R	    mov hideFileLen, ebx
-				    
+					.IF fileType==3
+						INVOKE CreateFile,
+						ADDR filename13, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
-				    ; 這行以下是加密
- 00000048  A1 00000149 R	    mov eax, showBmpPtr
- 0000004D  03 05 0000054B R	    add eax, startFrom
- 00000053  A3 0000014D R	    mov showBmpPtrTemp, eax
+					.IF fileType==4
+						INVOKE CreateFile,
+						ADDR filename14, ; ptr to filename
+						GENERIC_WRITE, ; access mode
+						0, ; share mode
+						0, ; ptr to security attributes
+						CREATE_ALWAYS, ; file creation options
+						FILE_ATTRIBUTE_NORMAL, ; file attributes
+						0 ; handle to template file
+					.ENDIF
 
-				    invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
-				    ; 到這行是加密
-				    
-				    ; 這行以下是解密
- 0000007B  A1 00000149 R	    mov eax, showBmpPtr
- 00000080  03 05 0000054B R	    add eax, startFrom
- 00000086  A3 0000014D R	    mov showBmpPtrTemp, eax
+ 00000127  A3 00000155 R		mov fileHandle, eax
+					.IF eax == INVALID_HANDLE_VALUE
+ 00000131  BA 00000140 R			mov edx,OFFSET errMsg ; Display error message
+ 00000136  E8 00000000 E			call WriteString
+ 0000013B  EB 18				jmp END_FUNC
+					.ENDIF
+					.ENDIF
 
-				    invoke unHideTheFile , showBmpPtrTemp, OFFSET  unHideFile, showBmpLen, 0
+					INVOKE WriteFile, ; write text to file
+					fileHandle, ; file handle
+					buffer, ; buffer pointer
+					bufSize, ; number of bytes to write
+					ADDR bytesWritten, ; number of bytes written
+					0 ; overlapped execution flag
 
- 000000A3  A3 00000546 R	    mov unhideFileLen, eax
- 000000A8  88 1D 0000054A R	    mov unHideFileType, bl
+ 00000155			END_FUNC:
+					ret
+ 00000159			byte2file ENDP
+				END
 
-				    ; 到這行是解密
-
-
- 000000AE  C3			    ret
- 000000AF			main ENDP
-
-				END main
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/16/23 13:17:13
-main.asm						     Symbols 2 - 1
+Microsoft (R) Macro Assembler Version 14.29.30153.0	    12/16/23 17:29:16
+byte2file.asm						     Symbols 2 - 1
 
 
 
@@ -207,8 +313,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000054F Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000000AF Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000015A Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000159 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -225,7 +331,6 @@ Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-File2Byte  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -255,7 +360,6 @@ HeapCreate . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapDestroy  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-HideTheFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -317,12 +421,14 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-ecnryptOneByte . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-extractByte  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000AF Public STDCALL
+byte2file  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000159 Public STDCALL
+  buffer . . . . . . . . . . . .	DWord	 bp + 00000008
+  bufSize  . . . . . . . . . . .	DWord	 bp + 0000000C
+  fileType . . . . . . . . . . .	Byte	 bp + 00000010
+  output . . . . . . . . . . . .	DWord	 bp + 00000014
+  END_FUNC . . . . . . . . . . .	L Near	 00000155 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-unHideTheFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -542,16 +648,21 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
+bytesWritten . . . . . . . . . .	Byte	 00000159 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-errMsg . . . . . . . . . . . . .	Byte	 00000036 _DATA	
+errMsg . . . . . . . . . . . . .	Byte	 00000140 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
-fileType . . . . . . . . . . . .	Byte	 0000015D _DATA	
-file_path  . . . . . . . . . . .	Byte	 00000049 _DATA	
-filename . . . . . . . . . . . .	Byte	 00000000 _DATA	
+fileHandle . . . . . . . . . . .	DWord	 00000155 _DATA	
+filename01 . . . . . . . . . . .	Byte	 00000000 _DATA	
+filename02 . . . . . . . . . . .	Byte	 00000028 _DATA	
+filename03 . . . . . . . . . . .	Byte	 00000050 _DATA	
+filename04 . . . . . . . . . . .	Byte	 00000078 _DATA	
+filename11 . . . . . . . . . . .	Byte	 000000A0 _DATA	
+filename12 . . . . . . . . . . .	Byte	 000000C8 _DATA	
+filename13 . . . . . . . . . . .	Byte	 000000F0 _DATA	
+filename14 . . . . . . . . . . .	Byte	 00000118 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
-hideFileLen  . . . . . . . . . .	DWord	 00000159 _DATA	
-hideFilePtr  . . . . . . . . . .	DWord	 00000155 _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -560,13 +671,6 @@ lightMagenta . . . . . . . . . .	Number	 0000000Dh
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-showBmpLen . . . . . . . . . . .	DWord	 00000151 _DATA	
-showBmpPtrTemp . . . . . . . . .	DWord	 0000014D _DATA	
-showBmpPtr . . . . . . . . . . .	DWord	 00000149 _DATA	
-startFrom  . . . . . . . . . . .	DWord	 0000054B _DATA	
-unHideFileType . . . . . . . . .	Byte	 0000054A _DATA	
-unHideFile . . . . . . . . . . .	Byte	 0000015E _DATA	
-unhideFileLen  . . . . . . . . .	DWord	 00000546 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   

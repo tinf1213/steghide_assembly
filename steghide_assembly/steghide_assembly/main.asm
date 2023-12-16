@@ -1,6 +1,7 @@
 INCLUDE Irvine32.inc
 INCLUDE file2byte.inc ; Include the file containing the prototype
 INCLUDE encrypt.inc
+INCLUDE byte2file.inc
 .data
 filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 errMsg BYTE "Cannot create file", 0
@@ -12,7 +13,7 @@ showBmpPtrTemp dword ?
 showBmpLen dword ?
 hideFilePtr dword ?
 hideFileLen dword ?
-fileType byte 9
+fileType byte 2
 
 unHideFile byte 1000 DUP(?);
 unhideFileLen dword ?
@@ -50,6 +51,8 @@ main PROC
 
     invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
     ;;;;;;;;;寫檔加在這裡;;;;;;;;;
+    invoke byte2file, showBmpPtr ,showBmpLen, fileType, 0
+
     ; 到這行是加密
     
     ; 這行以下是解密
@@ -61,8 +64,9 @@ main PROC
 
     mov unhideFileLen, eax
     mov unHideFileType, bl
-    ;;;;;;;;;寫檔加在這裡;;;;;;;;;
     ; 到這行是解密
+    
+    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;寫檔
 
 
     ret
