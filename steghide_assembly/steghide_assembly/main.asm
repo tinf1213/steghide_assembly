@@ -37,8 +37,11 @@ main PROC
     INVOKE File2Byte, ADDR file_path
     mov esi, eax
     mov ecx, ebx
+    mov showBmpLen, ebx
     mov edi, OFFSET buffer_showBmp
     rep movsb
+    mov showBmpPtr, OFFSET buffer_showBmp
+    
 
     mov edx, OFFSET file_path
     mov ecx, LENGTHOF file_path-1
@@ -48,9 +51,10 @@ main PROC
     INVOKE File2Byte, ADDR file_path
     mov esi, eax
     mov ecx, ebx
+    mov hideFileLen, ebx
     mov edi, OFFSET buffer_hideFile
     rep movsb
-    
+    mov hideFilePtr, OFFSET buffer_hideFile
 
     ; 這行以下是加密
     mov eax, showBmpPtr

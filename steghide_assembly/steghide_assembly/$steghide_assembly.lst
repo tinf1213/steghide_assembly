@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/16/23 21:27:39
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/16/23 21:34:06
 main.asm						     Page 1 - 1
 
 
@@ -88,25 +88,31 @@ main.asm						     Page 1 - 1
 				    INVOKE File2Byte, ADDR file_path
  00000019  8B F0		    mov esi, eax
  0000001B  8B CB		    mov ecx, ebx
- 0000001D  BF 00000000 R	    mov edi, OFFSET buffer_showBmp
- 00000022  F3/ A4		    rep movsb
+ 0000001D  89 1D 00004F71 R	    mov showBmpLen, ebx
+ 00000023  BF 00000000 R	    mov edi, OFFSET buffer_showBmp
+ 00000028  F3/ A4		    rep movsb
+ 0000002A  C7 05 00004F69 R	    mov showBmpPtr, OFFSET buffer_showBmp
+	   00000000 R
+				    
 
- 00000024  BA 00004E69 R	    mov edx, OFFSET file_path
- 00000029  B9 000000FF		    mov ecx, LENGTHOF file_path-1
- 0000002E  E8 00000000 E	    call ReadString
+ 00000034  BA 00004E69 R	    mov edx, OFFSET file_path
+ 00000039  B9 000000FF		    mov ecx, LENGTHOF file_path-1
+ 0000003E  E8 00000000 E	    call ReadString
 				    ;mov ecx, LENGTHOF file_path
 				    ;call WriteString
 				    INVOKE File2Byte, ADDR file_path
- 0000003D  8B F0		    mov esi, eax
- 0000003F  8B CB		    mov ecx, ebx
- 00000041  BF 00002710 R	    mov edi, OFFSET buffer_hideFile
- 00000046  F3/ A4		    rep movsb
-				    
+ 0000004D  8B F0		    mov esi, eax
+ 0000004F  8B CB		    mov ecx, ebx
+ 00000051  89 1D 00004F79 R	    mov hideFileLen, ebx
+ 00000057  BF 00002710 R	    mov edi, OFFSET buffer_hideFile
+ 0000005C  F3/ A4		    rep movsb
+ 0000005E  C7 05 00004F75 R	    mov hideFilePtr, OFFSET buffer_hideFile
+	   00002710 R
 
 				    ; 這行以下是加密
- 00000048  A1 00004F69 R	    mov eax, showBmpPtr
- 0000004D  03 05 0000536B R	    add eax, startFrom
- 00000053  A3 00004F6D R	    mov showBmpPtrTemp, eax
+ 00000068  A1 00004F69 R	    mov eax, showBmpPtr
+ 0000006D  03 05 0000536B R	    add eax, startFrom
+ 00000073  A3 00004F6D R	    mov showBmpPtrTemp, eax
 
 				    invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
 				    ;;;;;;;;;寫檔加在這裡;;;;;;;;;
@@ -115,24 +121,24 @@ main.asm						     Page 1 - 1
 				    ; 到這行是加密
 				    
 				    ; 這行以下是解密
- 00000094  A1 00004F69 R	    mov eax, showBmpPtr
- 00000099  03 05 0000536B R	    add eax, startFrom
- 0000009F  A3 00004F6D R	    mov showBmpPtrTemp, eax
+ 000000B4  A1 00004F69 R	    mov eax, showBmpPtr
+ 000000B9  03 05 0000536B R	    add eax, startFrom
+ 000000BF  A3 00004F6D R	    mov showBmpPtrTemp, eax
 
 				    invoke unHideTheFile , showBmpPtrTemp, OFFSET  unHideFile, showBmpLen, 0
 
- 000000BC  A3 00005366 R	    mov unhideFileLen, eax
- 000000C1  88 1D 0000536A R	    mov unHideFileType, bl
+ 000000DC  A3 00005366 R	    mov unhideFileLen, eax
+ 000000E1  88 1D 0000536A R	    mov unHideFileType, bl
 				    ; 到這行是解密
 				    
 				    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;寫檔
 
 
- 000000DF  C3			    ret
- 000000E0			main ENDP
+ 000000FF  C3			    ret
+ 00000100			main ENDP
 
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/16/23 21:27:39
+Microsoft (R) Macro Assembler Version 14.29.30152.0	    12/16/23 21:34:06
 main.asm						     Symbols 2 - 1
 
 
@@ -227,7 +233,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 0000536F Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000000E0 Para	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000100 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -339,7 +345,7 @@ WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 byte2file  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ecnryptOneByte . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 extractByte  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000E0 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000100 Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 unHideTheFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
