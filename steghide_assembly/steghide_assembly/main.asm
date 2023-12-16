@@ -49,6 +49,7 @@ main PROC
     mov showBmpPtrTemp, eax
 
     invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
+    ;;;;;;;;;寫檔加在這裡;;;;;;;;;
     ; 到這行是加密
     
     ; 這行以下是解密
@@ -60,7 +61,7 @@ main PROC
 
     mov unhideFileLen, eax
     mov unHideFileType, bl
-
+    ;;;;;;;;;寫檔加在這裡;;;;;;;;;
     ; 到這行是解密
 
 
