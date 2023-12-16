@@ -4,8 +4,8 @@ INCLUDE encrypt.inc
 INCLUDE byte2file.inc
 .data
 
-buffer_showBmp BYTE 10000 dup(?)
-buffer_hideFile BYTE 10000 dup(?)
+buffer_showBmp BYTE 100000 dup(?)
+buffer_hideFile BYTE 100000 dup(?)
 
 filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 errMsg BYTE "Cannot create file", 0
@@ -19,7 +19,7 @@ hideFilePtr dword ?
 hideFileLen dword ?
 fileType byte 2
 
-unHideFile byte 1000 DUP(?);
+unHideFile byte 1000000 DUP(?);
 unhideFileLen dword ?
 unHideFileType byte ?
 ;

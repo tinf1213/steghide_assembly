@@ -117,14 +117,14 @@ byte2file proc,
 		FILE_ATTRIBUTE_NORMAL, ; file attributes
 		0 ; handle to template file
 	.ENDIF
-
+	.ENDIF
 	mov fileHandle, eax
 	.IF eax == INVALID_HANDLE_VALUE
 		mov edx,OFFSET errMsg ; Display error message
 		call WriteString
 		jmp END_FUNC
 	.ENDIF
-	.ENDIF
+	
 
 	INVOKE WriteFile, ; write text to file
 	fileHandle, ; file handle
