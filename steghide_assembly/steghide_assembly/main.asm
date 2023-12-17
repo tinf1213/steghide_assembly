@@ -18,7 +18,7 @@ showBmpLen dword ?
 hideFilePtr dword ?
 hideFileLen dword ?
 fileType byte 2
-
+lastChar byte ?
 unHideFile byte 1000000 DUP(?);
 unhideFileLen dword ?
 unHideFileType byte ?
@@ -69,7 +69,23 @@ encryptFile:
     mov edx, OFFSET file_path
     mov ecx, LENGTHOF file_path-1
     call ReadString
-    
+    lea ebx, file_path
+    add ebx, eax
+    dec ebx
+    movzx eax, byte ptr [ebx]
+    mov lastChar, al 
+    .IF lastChar=='t'
+        mov fileType, 1
+    .ENDIF
+    .IF lastChar=='p'
+        mov fileType, 2
+    .ENDIF
+    .IF lastChar=='g'
+        mov fileType, 3
+    .ENDIF
+    .IF lastChar=='e'
+        mov fileType, 4
+    .ENDIF
     INVOKE File2Byte, ADDR file_path
     mov esi, eax
     mov ecx, ebx
