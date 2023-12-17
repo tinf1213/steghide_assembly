@@ -10,14 +10,14 @@ buffer_hideFile BYTE 1000000 dup(?)
 filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 errMsg BYTE "Cannot create file", 0
 file_path BYTE 256 dup (?) 
-; ²{¦bÅª¶i¨Óªº¬O File_path
+; ï¿½{ï¿½bÅªï¿½iï¿½Óªï¿½ï¿½O File_path
 
 showBmpPtr dword ?
 showBmpPtrTemp dword ?
 showBmpLen dword ?
 hideFilePtr dword ?
 hideFileLen dword ?
-fileType byte 2
+fileType byte ?
 lastChar byte ?
 unHideFile byte 1000000 DUP(?);
 unhideFileLen dword ?
@@ -94,15 +94,15 @@ encryptFile:
     rep movsb
     mov hideFilePtr, OFFSET buffer_hideFile
 
-    ; ³o¦æ¥H¤U¬O¥[±K
+    ; ï¿½oï¿½ï¿½Hï¿½Uï¿½Oï¿½[ï¿½K
     mov eax, showBmpPtr
     add eax, startFrom
     mov showBmpPtrTemp, eax
 
     invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
-    ;;;;;;;;;¼gÀÉ¥[¦b³o¸Ì;;;;;;;;;
+    ;;;;;;;;;ï¿½gï¿½É¥[ï¿½bï¿½oï¿½ï¿½;;;;;;;;;
     invoke byte2file, showBmpPtr ,showBmpLen, fileType, 0
-    ; ¨ì³o¦æ¬O¥[±K
+    ; ï¿½ï¿½oï¿½ï¿½Oï¿½[ï¿½K
     jmp exitProgram
 
 decryptFile:
@@ -118,7 +118,7 @@ decryptFile:
     mov edi, OFFSET buffer_showBmp
     rep movsb
     mov showBmpPtr, OFFSET buffer_showBmp
-    ; ³o¦æ¥H¤U¬O¸Ñ±K
+    ; ï¿½oï¿½ï¿½Hï¿½Uï¿½Oï¿½Ñ±K
     mov eax, showBmpPtr
     add eax, startFrom
     mov showBmpPtrTemp, eax
@@ -127,9 +127,9 @@ decryptFile:
 
     mov unhideFileLen, eax
     mov unHideFileType, bl
-    ; ¨ì³o¦æ¬O¸Ñ±K
+    ; ï¿½ï¿½oï¿½ï¿½Oï¿½Ñ±K
     
-    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;¼gÀÉ
+    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;ï¿½gï¿½ï¿½
     jmp exitProgram
 
 invalidInput:
