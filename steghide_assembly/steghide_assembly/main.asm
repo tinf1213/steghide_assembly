@@ -10,7 +10,7 @@ buffer_hideFile BYTE 1000000 dup(?)
 filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
 errMsg BYTE "Cannot create file", 0
 file_path BYTE 256 dup (?) 
-; �{�bŪ�i�Ӫ��O File_path
+; 現在讀進來的是 File_path
 
 showBmpPtr dword ?
 showBmpPtrTemp dword ?
@@ -94,15 +94,15 @@ encryptFile:
     rep movsb
     mov hideFilePtr, OFFSET buffer_hideFile
 
-    ; �o��H�U�O�[�K
+    ; 這行以下是加密
     mov eax, showBmpPtr
     add eax, startFrom
     mov showBmpPtrTemp, eax
 
     invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
-    ;;;;;;;;;�g�ɥ[�b�o��;;;;;;;;;
+   ;;;;;;;;;寫檔加在這裡;;;;;;;;;
     invoke byte2file, showBmpPtr ,showBmpLen, fileType, 0
-    ; ��o��O�[�K
+    ; 到這行是加密
     jmp exitProgram
 
 decryptFile:
@@ -118,7 +118,7 @@ decryptFile:
     mov edi, OFFSET buffer_showBmp
     rep movsb
     mov showBmpPtr, OFFSET buffer_showBmp
-    ; �o��H�U�O�ѱK
+     ; 這行以下是解密
     mov eax, showBmpPtr
     add eax, startFrom
     mov showBmpPtrTemp, eax
@@ -127,9 +127,9 @@ decryptFile:
 
     mov unhideFileLen, eax
     mov unHideFileType, bl
-    ; ��o��O�ѱK
+    ; 到這行是解密
     
-    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;�g��
+    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;寫檔
     jmp exitProgram
 
 invalidInput:
