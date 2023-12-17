@@ -1,8 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.24.28316.0	    12/17/23 13:46:58
-encrypt.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.29.30153.0	    12/18/23 05:03:26
+main.asm						     Page 1 - 1
 
 
-				include Irvine32.inc
+				INCLUDE Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
 			      C ;OPTION CASEMAP:NONE		; optional: make identifiers case-sensitive
@@ -20,241 +20,320 @@ encrypt.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
- 00000000			.data 
- 00000000  00000100 [		img byte 256 DUP(0A0h);
-	    A0
+				INCLUDE file2byte.inc ; Include the file containing the prototype
+			      C File2Byte PROTO, path:DWORD
+			      C 
+				INCLUDE encrypt.inc
+			      C ecnryptOneByte proto, showBMP: dword, hideByte: byte
+			      C HideTheFile proto, showBMP: dword, HideFile:dword,  BMPLen:dword, HideLen:dword, fileType: byte
+			      C extractByte proto, showBMP: dword
+			      C unHideTheFile proto, showBMP: dword, HideFile:dword,  BMPLen:dword, HideLen: dword
+			      C 
+				INCLUDE byte2file.inc
+			      C byte2file proto, buffer: DWORD, bufSize: DWORD, fileType: byte, output: DWORD
+			      C 
+ 00000000			.data
+
+ 00000000  000F4240 [		buffer_showBmp BYTE 1000000 dup(?)
+	    00
 	   ]
- 00000100  00000008 [		encrpyt byte 8 DUP(0FFh), 3 DUP(0ABh) ;
-	    FF
-	   ]
-	   00000003 [
-	    AB
-	   ]
- 0000010B  0000000A [		decrpyt byte 10 DUP(?);
+ 000F4240  000F4240 [		buffer_hideFile BYTE 1000000 dup(?)
 	    00
 	   ]
 
- 00000115 00			decrpytFileType byte ?;
+ 001E8480 43 3A 5C 73 74	filename BYTE "C:\steghide_assembly\steghide_assembly\files\test.bmp", 0
+	   65 67 68 69 64
+	   65 5F 61 73 73
+	   65 6D 62 6C 79
+	   5C 73 74 65 67
+	   68 69 64 65 5F
+	   61 73 73 65 6D
+	   62 6C 79 5C 66
+	   69 6C 65 73 5C
+	   74 65 73 74 2E
+	   62 6D 70 00
+ 001E84B6 43 61 6E 6E 6F	errMsg BYTE "Cannot create file", 0
+	   74 20 63 72 65
+	   61 74 65 20 66
+	   69 6C 65 00
+ 001E84C9  00000100 [		file_path BYTE 256 dup (?) 
+	    00
+	   ]
+				; ÁèæÂú®ËÆÄÈÄ≤‰æÜÁöÑÊòØ File_path
 
- 00000000			.code 
-				;main PROC 
-				;xor eax, eax
-				;xor ebx, ebx
-				;xor ecx, ecx
-				;xor edx, edx
+ 001E85C9 00000000		showBmpPtr dword ?
+ 001E85CD 00000000		showBmpPtrTemp dword ?
+ 001E85D1 00000000		showBmpLen dword ?
+ 001E85D5 00000000		hideFilePtr dword ?
+ 001E85D9 00000000		hideFileLen dword ?
+ 001E85DD 00			fileType byte ?
+ 001E85DE 00			lastChar byte ?
+ 001E85DF  000F4240 [		unHideFile byte 1000000 DUP(?);
+	    00
+	   ]
+ 002DC81F 00000000		unhideFileLen dword ?
+ 002DC823 00			unHideFileType byte ?
+				;
+ 002DC824  00000100 [		inputBuffer BYTE 256 DUP(?) ;Used to store user input
+	    00
+	   ]
+ 002DC924 45 6E 74 65 72	prompt BYTE "Enter 'e' to encrypt/'d' to decrypt/'h' to look over more info: ", 0
+	   20 27 65 27 20
+	   74 6F 20 65 6E
+	   63 72 79 70 74
+	   2F 27 64 27 20
+	   74 6F 20 64 65
+	   63 72 79 70 74
+	   2F 27 68 27 20
+	   74 6F 20 6C 6F
+	   6F 6B 20 6F 76
+	   65 72 20 6D 6F
+	   72 65 20 69 6E
+	   66 6F 3A 20 00
+ 002DC965 49 6E 76 61 6C	errorMsg BYTE "Invalid input. Please enter 'e' or 'd'.", 0
+	   69 64 20 69 6E
+	   70 75 74 2E 20
+	   50 6C 65 61 73
+	   65 20 65 6E 74
+	   65 72 20 27 65
+	   27 20 6F 72 20
+	   27 64 27 2E 00
+ 002DC98D 45 6E 74 65 72	encryptMsg BYTE "Enter the path of the image file: ", 0
+	   20 74 68 65 20
+	   70 61 74 68 20
+	   6F 66 20 74 68
+	   65 20 69 6D 61
+	   67 65 20 66 69
+	   6C 65 3A 20 00
+ 002DC9B0 45 6E 74 65 72	textMsg BYTE "Enter the path of the text file to hide: ", 0
+	   20 74 68 65 20
+	   70 61 74 68 20
+	   6F 66 20 74 68
+	   65 20 74 65 78
+	   74 20 66 69 6C
+	   65 20 74 6F 20
+	   68 69 64 65 3A
+	   20 00
+ 002DC9DA 45 6E 74 65 72	decryptMsg BYTE "Enter the path of the encrypted image file: ", 0
+	   20 74 68 65 20
+	   70 61 74 68 20
+	   6F 66 20 74 68
+	   65 20 65 6E 63
+	   72 79 70 74 65
+	   64 20 69 6D 61
+	   67 65 20 66 69
+	   6C 65 3A 20 00
 
-				;invoke HideTheFile ,OFFSET img, OFFSET encrpyt, LENGTHOF img, LENGTHOF encrpyt, 9
-				;invoke unHideTheFile ,OFFSET img, OFFSET  decrpyt, LENGTHOF img, 0
-
-
-
-				;invoke waitmsg
-				;invoke ExitProcess,0 
-
-				;main ENDP 
-
-				; send in the pointer of the BMP. Start to hide hideByte from here
- 00000000			encryptOneByte proc USES ecx esi eax,
-					showBMP: dword, hideByte: byte
-
- 00000006  B9 00000004			mov ecx, 4
- 0000000B  8B 75 08			mov esi, showBMP
- 0000000E  8A 65 0C			mov ah, hideByte
-
- 00000011				DoTwoAndJumpTwo:
-
-						; push in one bit
- 00000011  8A 06				mov al, [esi]
- 00000013  D0 E8				shr al, 1
- 00000015  66| D1 C0				rol ax, 1
- 00000018  88 06				mov [esi], al
- 0000001A  46					inc esi
-						
-						; push in one bit
- 0000001B  8A 06				mov al, [esi]
- 0000001D  D0 E8				shr al, 1
- 0000001F  66| D1 C0				rol ax, 1
- 00000022  88 06				mov [esi], al
- 00000024  46					inc esi
-
-						; jump to two byte after
- 00000025  83 C6 02				add esi, 2
-							
- 00000028  E2 E7			Loop DoTwoAndJumpTwo
-
-					ret
- 00000031			encryptOneByte endp
-
- 00000031			HideTheFile proc,
-				    showBMP:dword, HideFile:dword, BMPLen:dword, HideLen: dword, fileType: byte
-
- 00000034  8B 75 08			mov esi, showBMP
-
-					; encrypt the file type (1 byte)
-					invoke encryptOneByte, esi, fileType
- 00000041  83 C6 10			add esi, 16
-					
-					; encrypt the len of HideFile (4 byte)
- 00000044  8B 5D 14			mov ebx, HideLen
- 00000047  B9 00000004			mov ecx, 4
- 0000004C				LenEncrypt:
- 0000004C  51					push ecx
- 0000004D  C1 C3 08					rol ebx, 8;
-							invoke encryptOneByte, esi, bl
- 00000059  83 C6 10					add esi, 16
-							
-
- 0000005C  59					pop ecx
- 0000005D  E2 ED			Loop LenEncrypt
-
- 0000005F  8B 7D 0C			mov edi, HideFIle
- 00000062  8B 4D 14			mov ecx, HideLen
-
- 00000065				ByteEncrypt:
- 00000065  51					push ecx
-								invoke encryptOneByte , esi, [edi]
- 0000006F  83 C6 10						add esi, 16
- 00000072  47							inc edi
- 00000073  59					pop ecx
- 00000074  E2 EF			loop ByteEncrypt
-
-
-
-					; ¨d¨› img §∫Æe¨Oß_¶≥≥QßÛßÔ
- 00000076  8B 4D 10			mov ecx, BMPLen
- 00000079  8B 75 08			mov esi, showBMP
- 0000007C				checkImg:
- 0000007C  8A 06				mov al, [esi] ; •u¨› al ¥N¶n
-						; call crlf
-						; call writebin
- 0000007E  46					inc esi
- 0000007F  E2 FB			loop checkImg
-
-
-					invoke waitmsg
-
-
-				    ret
- 0000008A			HideTheFile endp
-
-
-				; ®˙•X§@≠” byte ™∫∏ÍÆ∆
- 0000008A			extractByte proc USES esi eax ecx ebx,
-					showBMP: dword
-					; edx bring out
- 00000091  8B 75 08			mov esi, showBMP
- 00000094  33 C0			xor eax, eax
- 00000096  B9 00000004			mov ecx, 4
- 0000009B				twoBit:
- 0000009B  8A 06				mov al, [esi]
- 0000009D  B3 01				mov bl, 1
- 0000009F  22 D8				and bl, al
- 000000A1  D0 E4				shl ah, 1
- 000000A3  02 E3				add ah, bl
- 000000A5  46					inc esi
-
- 000000A6  8A 06				mov al, [esi]
- 000000A8  B3 01				mov bl, 1
- 000000AA  22 D8				and bl, al
- 000000AC  D0 E4				shl ah, 1
- 000000AE  02 E3				add ah, bl
- 000000B0  46					inc esi
-
- 000000B1  83 C6 02				add esi, 2
-
- 000000B4  E2 E5			Loop twoBit
-
- 000000B6  8A C4			mov al, ah
-					; call writebin
-					; call crlf
-
- 000000B8  8A D4			mov dl, ah
-
-					ret
- 000000C2			extractByte endp
-
-				; ∏—±K¿…Æ◊
- 000000C2			unHideTheFile proc,
-				    showBMP:dword, HideFile:dword, BMPLen:dword, HideLen: dword
-
- 000000C5  8B 75 08			mov esi, showBMP
-
-					; get hidden file type
-					invoke extractByte, esi
- 000000CE  83 C6 10			add esi, 16;
- 000000D1  88 15 00000115 R		mov decrpytFileType, dl
- 000000D7  A0 00000115 R		mov al, decrpytFileType
- 000000DC  E8 00000000 E		call crlf
- 000000E1  E8 00000000 E		call crlf
- 000000E6  E8 00000000 E		call writebin
- 000000EB  E8 00000000 E		call crlf
- 000000F0  E8 00000000 E		call crlf
+ 002DCA07 69 6E 74 72 6F	info1 BYTE "introduce:",13,10,0
+	   64 75 63 65 3A
+	   0D 0A 00
+ 002DCA14 20 20 20 20 74	introinfo BYTE "    this is our assembly language final project",13,10,0
+	   68 69 73 20 69
+	   73 20 6F 75 72
+	   20 61 73 73 65
+	   6D 62 6C 79 20
+	   6C 61 6E 67 75
+	   61 67 65 20 66
+	   69 6E 61 6C 20
+	   70 72 6F 6A 65
+	   63 74 0D 0A 00
+ 002DCA46 63 72 65 61 74	info2 BYTE "creator:",13,10,0
+	   6F 72 3A 0D 0A
+	   00
+ 002DCA51 20 20 20 20 31	creatorinfo BYTE "    111403550",13,10,
+	   31 31 34 30 33
+	   35 35 30 0D 0A
+	   20 20 20 20 31
+	   31 31 34 30 33
+	   35 35 32 0D 0A
+	   20 20 20 20 31
+	   31 31 34 30 33
+	   30 35 39 0D 0A
+	   20 20 20 20 31
+	   31 31 34 30 33
+	   35 31 36 0D 0A
+	   00
+				         "    111403552",13,10,
+				         "    111403059",13,10,
+				         "    111403516",13,10,0
+ 002DCA8E 65 78 70 6C 61	info3 BYTE "explantion of the instruction:",13,10,0
+	   6E 74 69 6F 6E
+	   20 6F 66 20 74
+	   68 65 20 69 6E
+	   73 74 72 75 63
+	   74 69 6F 6E 3A
+	   0D 0A 00
+ 002DCAAF 20 20 20 20 63	einfo BYTE "    choose letter e to hide a file into an image",13,10, 0
+	   68 6F 6F 73 65
+	   20 6C 65 74 74
+	   65 72 20 65 20
+	   74 6F 20 68 69
+	   64 65 20 61 20
+	   66 69 6C 65 20
+	   69 6E 74 6F 20
+	   61 6E 20 69 6D
+	   61 67 65 0D 0A
+	   00
+ 002DCAE2 20 20 20 20 63	dinfo BYTE "    choose letter d to acquire the hidden file from the encrypted image",13,10,13,10, 0
+	   68 6F 6F 73 65
+	   20 6C 65 74 74
+	   65 72 20 64 20
+	   74 6F 20 61 63
+	   71 75 69 72 65
+	   20 74 68 65 20
+	   68 69 64 64 65
+	   6E 20 66 69 6C
+	   65 20 66 72 6F
+	   6D 20 74 68 65
+	   20 65 6E 63 72
+	   79 70 74 65 64
+	   20 69 6D 61 67
+	   65 0D 0A 0D 0A
+	   00
+				;
+ 002DCB2E 00000082		startFrom dword 82h
 
 
 
-					; ®˙±o≥Q¡Ù¬√™∫¿…Æ◊¶≥¶h™¯
- 000000F5  B9 00000004			mov ecx, 4
- 000000FA  33 DB			xor ebx, ebx
- 000000FC				LookHideLen:
- 000000FC  51					push ecx
-						invoke extractByte, esi;
- 00000103  83 C6 10				add esi, 16;
-					
- 00000106  C1 E3 08				shl ebx, 8
- 00000109  8A DA				mov bl, dl
-						
- 0000010B  59					pop ecx
- 0000010C  E2 EE			Loop LookHideLen
- 0000010E  89 5D 14			mov HideLen, ebx
- 00000111  8B 45 14			mov eax, HideLen
- 00000114  E8 00000000 E		call crlf
- 00000119  E8 00000000 E		call crlf
- 0000011E  E8 00000000 E		call writebin
- 00000123  E8 00000000 E		call crlf
- 00000128  E8 00000000 E		call crlf
+ 00000000			.code
+ 00000000			main PROC
+ 00000000			begin:
+ 00000000  BA 002DC924 R	    mov edx, OFFSET prompt
+ 00000005  E8 00000000 E	    call WriteString
 
+				    ; Wait for user input
+ 0000000A  BA 002DC824 R	    mov edx, OFFSET inputBuffer
+ 0000000F  B9 00000100		    mov ecx, SIZEOF inputBuffer
+ 00000014  E8 00000000 E	    call ReadString
 
-					; ±N≥Q¡Ù¬√™∫¿…Æ◊ºg®Ï HideFile ∏Ã≠±
- 0000012D  8B 7D 0C			mov edi, HideFile
- 00000130  8B 4D 14			mov ecx, HideLen
+				    ; Check user input
+ 00000019  A0 002DC824 R	    mov al, [inputBuffer]
+ 0000001E  3C 65		    cmp al, 'e'
+ 00000020  74 59		    je  encryptFile
+ 00000022  3C 64		    cmp al, 'd'
+ 00000024  0F 84 0000016F	    je  decryptFile
+ 0000002A  3C 68		    cmp al, 'h'
+ 0000002C  74 05		    je  information
+ 0000002E  E9 000001F1		    jmp invalidInput
 
- 00000133				LookByte:
- 00000133  51					push ecx
-						invoke extractByte ,esi;
- 0000013A  83 C6 10				add esi, 16
- 0000013D  88 17				mov [edi], dl
- 0000013F  47					inc edi
- 00000140  59					pop ecx
- 00000141  E2 F0			Loop LookByte
+ 00000033			information:
+ 00000033  BA 002DCA07 R	    mov edx, OFFSET info1
+ 00000038  E8 00000000 E	    call WriteString
+ 0000003D  BA 002DCA14 R	    mov edx, OFFSET introinfo
+ 00000042  E8 00000000 E	    call WriteString
+ 00000047  BA 002DCA46 R	    mov edx, OFFSET info2
+ 0000004C  E8 00000000 E	    call WriteString
+ 00000051  BA 002DCA51 R	    mov edx, OFFSET creatorinfo
+ 00000056  E8 00000000 E	    call WriteString
+ 0000005B  BA 002DCA8E R	    mov edx, OFFSET info3
+ 00000060  E8 00000000 E	    call WriteString
+ 00000065  BA 002DCAAF R	    mov edx, OFFSET einfo
+ 0000006A  E8 00000000 E	    call WriteString
+ 0000006F  BA 002DCAE2 R	    mov edx, OFFSET dinfo
+ 00000074  E8 00000000 E	    call WriteString
+ 00000079  EB 85		    jmp begin
 
+ 0000007B			encryptFile:
+ 0000007B  BA 002DC98D R	    mov edx, OFFSET encryptMsg
+ 00000080  E8 00000000 E	    call WriteString
+ 00000085  BA 001E84C9 R	    mov edx, OFFSET file_path
+ 0000008A  B9 000000FF		    mov ecx, LENGTHOF file_path-1
+ 0000008F  E8 00000000 E	    call ReadString
+				    INVOKE File2Byte, ADDR file_path
+ 0000009E  8B F0		    mov esi, eax
+ 000000A0  8B CB		    mov ecx, ebx
+ 000000A2  89 1D 001E85D1 R	    mov showBmpLen, ebx
+ 000000A8  BF 00000000 R	    mov edi, OFFSET buffer_showBmp
+ 000000AD  F3/ A4		    rep movsb
+ 000000AF  C7 05 001E85C9 R	    mov showBmpPtr, OFFSET buffer_showBmp
+	   00000000 R
+ 000000B9  BA 002DC9B0 R	    mov edx, OFFSET textMsg
+ 000000BE  E8 00000000 E	    call WriteString
+ 000000C3  BA 001E84C9 R	    mov edx, OFFSET file_path
+ 000000C8  B9 000000FF		    mov ecx, LENGTHOF file_path-1
+ 000000CD  E8 00000000 E	    call ReadString
+ 000000D2  8D 1D 001E84C9 R	    lea ebx, file_path
+ 000000D8  03 D8		    add ebx, eax
+ 000000DA  4B			    dec ebx
+ 000000DB  0F B6 03		    movzx eax, byte ptr [ebx]
+ 000000DE  A2 001E85DE R	    mov lastChar, al 
+				    .IF lastChar=='t'
+ 000000EC  C6 05 001E85DD R	        mov fileType, 1
+	   01
+				    .ENDIF
+				    .IF lastChar=='p'
+ 000000FC  C6 05 001E85DD R	        mov fileType, 2
+	   02
+				    .ENDIF
+				    .IF lastChar=='g'
+ 0000010C  C6 05 001E85DD R	        mov fileType, 3
+	   03
+				    .ENDIF
+				    .IF lastChar=='e'
+ 0000011C  C6 05 001E85DD R	        mov fileType, 4
+	   04
+				    .ENDIF
+				    INVOKE File2Byte, ADDR file_path
+ 0000012D  8B F0		    mov esi, eax
+ 0000012F  8B CB		    mov ecx, ebx
+ 00000131  89 1D 001E85D9 R	    mov hideFileLen, ebx
+ 00000137  BF 000F4240 R	    mov edi, OFFSET buffer_hideFile
+ 0000013C  F3/ A4		    rep movsb
+ 0000013E  C7 05 001E85D5 R	    mov hideFilePtr, OFFSET buffer_hideFile
+	   000F4240 R
 
+				    ; ÈÄôË°å‰ª•‰∏ãÊòØÂä†ÂØÜ
+ 00000148  A1 001E85C9 R	    mov eax, showBmpPtr
+ 0000014D  03 05 002DCB2E R	    add eax, startFrom
+ 00000153  A3 001E85CD R	    mov showBmpPtrTemp, eax
 
- 00000143  E8 00000000 E		call crlf
- 00000148  E8 00000000 E		call crlf
- 0000014D  E8 00000000 E		call crlf
+				    invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
+				    ; Âà∞ÈÄôË°åÊòØÂä†ÂØÜ
+				    invoke byte2file, showBmpPtr ,showBmpLen, fileType, 0
+ 00000194  E9 00000097		    jmp exitProgram
 
-					; øÈ•X¨›•ø§£•øΩT
- 00000152  8B 75 0C			mov esi, HideFile
- 00000155  B9 0000000B			mov ecx, Lengthof encrpyt
- 0000015A				checkDecrypt:
- 0000015A  8A 06				mov al, [esi] ; •u¨› al ¥N¶n
- 0000015C  E8 00000000 E			call crlf
- 00000161  E8 00000000 E			call writebin
- 00000166  E8 00000000 E			call crlf
- 0000016B  46					inc esi
- 0000016C  E2 EC			loop checkDecrypt
+ 00000199			decryptFile:
+ 00000199  BA 002DC9DA R	    mov edx, OFFSET decryptMsg
+ 0000019E  E8 00000000 E	    call WriteString
+ 000001A3  BA 001E84C9 R	    mov edx, OFFSET file_path
+ 000001A8  B9 000000FF		    mov ecx, LENGTHOF file_path-1
+ 000001AD  E8 00000000 E	    call ReadString
+				    INVOKE File2Byte, ADDR file_path
+ 000001BC  8B F0		    mov esi, eax
+ 000001BE  8B CB		    mov ecx, ebx
+ 000001C0  89 1D 001E85D1 R	    mov showBmpLen, ebx
+ 000001C6  BF 00000000 R	    mov edi, OFFSET buffer_showBmp
+ 000001CB  F3/ A4		    rep movsb
+ 000001CD  C7 05 001E85C9 R	    mov showBmpPtr, OFFSET buffer_showBmp
+	   00000000 R
+				     ; ÈÄôË°å‰ª•‰∏ãÊòØËß£ÂØÜ
+ 000001D7  A1 001E85C9 R	    mov eax, showBmpPtr
+ 000001DC  03 05 002DCB2E R	    add eax, startFrom
+ 000001E2  A3 001E85CD R	    mov showBmpPtrTemp, eax
 
- 0000016E  8B 45 14			mov eax, HideLen
- 00000171  8A 1D 00000115 R		mov bl, decrpytFileType
+				    invoke unHideTheFile , showBmpPtrTemp, OFFSET  unHideFile, showBmpLen, 0
 
-				    ret
- 0000017B			unHideTheFile endp
-encrypt.asm(221) : warning A6004:procedure argument or local not referenced : BMPLen
+ 000001FF  A3 002DC81F R	    mov unhideFileLen, eax
+ 00000204  88 1D 002DC823 R	    mov unHideFileType, bl
+				    ; Âà∞ÈÄôË°åÊòØËß£ÂØÜ
+				    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1
+ 00000222  EB 0C		    jmp exitProgram
 
-				END
-				;END main
-Microsoft (R) Macro Assembler Version 14.24.28316.0	    12/17/23 13:46:58
-encrypt.asm						     Symbols 2 - 1
+ 00000224			invalidInput:
+ 00000224  BA 002DC965 R	    mov edx, OFFSET errorMsg
+ 00000229  E8 00000000 E	    call WriteString
+ 0000022E  EB 00		    jmp exitProgram
+
+ 00000230			exitProgram:
+				    ; Your program exit code here
+				    exit
+
+ 00000237  C3			    ret
+ 00000238			main ENDP
+
+				END main
+Microsoft (R) Macro Assembler Version 14.29.30153.0	    12/18/23 05:03:26
+main.asm						     Symbols 2 - 1
 
 
 
@@ -347,8 +426,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000116 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000017B Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 002DCB32 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000238 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -365,6 +444,7 @@ Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+File2Byte  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToDosDateTime  . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FileTimeToSystemTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 FlushConsoleInputBuffer  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -394,15 +474,7 @@ HeapCreate . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapDestroy  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-HideTheFile  . . . . . . . . . .	P Near	 00000031 _TEXT	Length= 00000059 Public STDCALL
-  showBMP  . . . . . . . . . . .	DWord	 bp + 00000008
-  HideFile . . . . . . . . . . .	DWord	 bp + 0000000C
-  BMPLen . . . . . . . . . . . .	DWord	 bp + 00000010
-  HideLen  . . . . . . . . . . .	DWord	 bp + 00000014
-  fileType . . . . . . . . . . .	Byte	 bp + 00000018
-  LenEncrypt . . . . . . . . . .	L Near	 0000004C _TEXT	
-  ByteEncrypt  . . . . . . . . .	L Near	 00000065 _TEXT	
-  checkImg . . . . . . . . . . .	L Near	 0000007C _TEXT	
+HideTheFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -464,23 +536,19 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-encryptOneByte . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000031 Public STDCALL
-  showBMP  . . . . . . . . . . .	DWord	 bp + 00000008
-  hideByte . . . . . . . . . . .	Byte	 bp + 0000000C
-  DoTwoAndJumpTwo  . . . . . . .	L Near	 00000011 _TEXT	
-extractByte  . . . . . . . . . .	P Near	 0000008A _TEXT	Length= 00000038 Public STDCALL
-  showBMP  . . . . . . . . . . .	DWord	 bp + 00000008
-  twoBit . . . . . . . . . . . .	L Near	 0000009B _TEXT	
+byte2file  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ecnryptOneByte . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+extractByte  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000238 Public STDCALL
+  begin  . . . . . . . . . . . .	L Near	 00000000 _TEXT	
+  information  . . . . . . . . .	L Near	 00000033 _TEXT	
+  encryptFile  . . . . . . . . .	L Near	 0000007B _TEXT	
+  decryptFile  . . . . . . . . .	L Near	 00000199 _TEXT	
+  invalidInput . . . . . . . . .	L Near	 00000224 _TEXT	
+  exitProgram  . . . . . . . . .	L Near	 00000230 _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-unHideTheFile  . . . . . . . . .	P Near	 000000C2 _TEXT	Length= 000000B9 Public STDCALL
-  showBMP  . . . . . . . . . . .	DWord	 bp + 00000008
-  HideFile . . . . . . . . . . .	DWord	 bp + 0000000C
-  BMPLen . . . . . . . . . . . .	DWord	 bp + 00000010
-  HideLen  . . . . . . . . . . .	DWord	 bp + 00000014
-  LookHideLen  . . . . . . . . .	L Near	 000000FC _TEXT	
-  LookByte . . . . . . . . . . .	L Near	 00000133 _TEXT	
-  checkDecrypt . . . . . . . . .	L Near	 0000015A _TEXT	
+unHideTheFile  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
 
@@ -700,14 +768,30 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
+buffer_hideFile  . . . . . . . .	Byte	 000F4240 _DATA	
+buffer_showBmp . . . . . . . . .	Byte	 00000000 _DATA	
+creatorinfo  . . . . . . . . . .	Byte	 002DCA51 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-decrpytFileType  . . . . . . . .	Byte	 00000115 _DATA	
-decrpyt  . . . . . . . . . . . .	Byte	 0000010B _DATA	
-encrpyt  . . . . . . . . . . . .	Byte	 00000100 _DATA	
+decryptMsg . . . . . . . . . . .	Byte	 002DC9DA _DATA	
+dinfo  . . . . . . . . . . . . .	Byte	 002DCAE2 _DATA	
+einfo  . . . . . . . . . . . . .	Byte	 002DCAAF _DATA	
+encryptMsg . . . . . . . . . . .	Byte	 002DC98D _DATA	
+errMsg . . . . . . . . . . . . .	Byte	 001E84B6 _DATA	
+errorMsg . . . . . . . . . . . .	Byte	 002DC965 _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
+fileType . . . . . . . . . . . .	Byte	 001E85DD _DATA	
+file_path  . . . . . . . . . . .	Byte	 001E84C9 _DATA	
+filename . . . . . . . . . . . .	Byte	 001E8480 _DATA	
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
-img  . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+hideFileLen  . . . . . . . . . .	DWord	 001E85D9 _DATA	
+hideFilePtr  . . . . . . . . . .	DWord	 001E85D5 _DATA	
+info1  . . . . . . . . . . . . .	Byte	 002DCA07 _DATA	
+info2  . . . . . . . . . . . . .	Byte	 002DCA46 _DATA	
+info3  . . . . . . . . . . . . .	Byte	 002DCA8E _DATA	
+inputBuffer  . . . . . . . . . .	Byte	 002DC824 _DATA	
+introinfo  . . . . . . . . . . .	Byte	 002DCA14 _DATA	
+lastChar . . . . . . . . . . . .	Byte	 001E85DE _DATA	
 lightBlue  . . . . . . . . . . .	Number	 00000009h   
 lightCyan  . . . . . . . . . . .	Number	 0000000Bh   
 lightGray  . . . . . . . . . . .	Number	 00000007h   
@@ -715,10 +799,19 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+prompt . . . . . . . . . . . . .	Byte	 002DC924 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+showBmpLen . . . . . . . . . . .	DWord	 001E85D1 _DATA	
+showBmpPtrTemp . . . . . . . . .	DWord	 001E85CD _DATA	
+showBmpPtr . . . . . . . . . . .	DWord	 001E85C9 _DATA	
+startFrom  . . . . . . . . . . .	DWord	 002DCB2E _DATA	
+textMsg  . . . . . . . . . . . .	Byte	 002DC9B0 _DATA	
+unHideFileType . . . . . . . . .	Byte	 002DC823 _DATA	
+unHideFile . . . . . . . . . . .	Byte	 001E85DF _DATA	
+unhideFileLen  . . . . . . . . .	DWord	 002DC81F _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
-	   1 Warnings
+	   0 Warnings
 	   0 Errors

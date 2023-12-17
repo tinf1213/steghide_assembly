@@ -24,11 +24,22 @@ unhideFileLen dword ?
 unHideFileType byte ?
 ;
 inputBuffer BYTE 256 DUP(?) ;Used to store user input
-prompt BYTE "Enter 'e' to encrypt or 'd' to decrypt: ", 0
+prompt BYTE "Enter 'e' to encrypt/'d' to decrypt/'h' to look over more info: ", 0
 errorMsg BYTE "Invalid input. Please enter 'e' or 'd'.", 0
 encryptMsg BYTE "Enter the path of the image file: ", 0
 textMsg BYTE "Enter the path of the text file to hide: ", 0
 decryptMsg BYTE "Enter the path of the encrypted image file: ", 0
+
+info1 BYTE "introduce:",13,10,0
+introinfo BYTE "    this is our assembly language final project",13,10,0
+info2 BYTE "creator:",13,10,0
+creatorinfo BYTE "    111403550",13,10,
+         "    111403552",13,10,
+         "    111403059",13,10,
+         "    111403516",13,10,0
+info3 BYTE "explantion of the instruction:",13,10,0
+einfo BYTE "    choose letter e to hide a file into an image",13,10, 0
+dinfo BYTE "    choose letter d to acquire the hidden file from the encrypted image",13,10,13,10, 0
 ;
 startFrom dword 82h
 
@@ -36,6 +47,7 @@ startFrom dword 82h
 
 .code
 main PROC
+begin:
     mov edx, OFFSET prompt
     call WriteString
 
@@ -50,7 +62,27 @@ main PROC
     je  encryptFile
     cmp al, 'd'
     je  decryptFile
+    cmp al, 'h'
+    je  information
     jmp invalidInput
+
+information:
+    mov edx, OFFSET info1
+    call WriteString
+    mov edx, OFFSET introinfo
+    call WriteString
+    mov edx, OFFSET info2
+    call WriteString
+    mov edx, OFFSET creatorinfo
+    call WriteString
+    mov edx, OFFSET info3
+    call WriteString
+    mov edx, OFFSET einfo
+    call WriteString
+    mov edx, OFFSET dinfo
+    call WriteString
+    jmp begin
+
 encryptFile:
     mov edx, OFFSET encryptMsg
     call WriteString
@@ -100,9 +132,8 @@ encryptFile:
     mov showBmpPtrTemp, eax
 
     invoke HideTheFile , showBmpPtrTemp, hideFilePtr, showBmpLen, hideFileLen, fileType
-   ;;;;;;;;;寫檔加在這裡;;;;;;;;;
-    invoke byte2file, showBmpPtr ,showBmpLen, fileType, 0
     ; 到這行是加密
+    invoke byte2file, showBmpPtr ,showBmpLen, fileType, 0
     jmp exitProgram
 
 decryptFile:
@@ -128,8 +159,7 @@ decryptFile:
     mov unhideFileLen, eax
     mov unHideFileType, bl
     ; 到這行是解密
-    
-    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1;寫檔
+    invoke byte2file, offset unHideFile, unhideFileLen, unHideFileType, 1
     jmp exitProgram
 
 invalidInput:
