@@ -169,8 +169,10 @@ unHideTheFile proc,
 		push ecx
 		invoke extractByte, esi;
 		add esi, 16;
-		shr ebx, 8
+	
+		shl ebx, 8
 		mov bl, dl
+		
 		pop ecx
 	Loop LookHideLen
 	mov HideLen, ebx
